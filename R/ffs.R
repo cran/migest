@@ -1,5 +1,7 @@
 ffs <-
-function(P1,P2,d,b,m=NULL,net=FALSE,d.adj=FALSE,...){
+function(P1,P2,d,b,m=NULL,method="stocks",b.mat=NULL,d.mat=NULL,...){
+  if(!(method %in% c("outside","stocks","deaths")) | length(method)!=1)
+    stop("method must be one of outside, stocks or deaths")
   R<-nrow(P1)
   #set up offset
   if(is.null(m)){
@@ -8,7 +10,7 @@ function(P1,P2,d,b,m=NULL,net=FALSE,d.adj=FALSE,...){
   if(is.null(dimnames(m))){
     dimnames(m)<-list(orig=dimnames(P1)[[1]],dest=dimnames(P2)[[1]],pob=dimnames(P1)[[2]])
   }
-  if(net==TRUE){
+  if(method=="stocks"){
     if(round(sum(P2-P1),1)!=round(sum(b-d),1)){
       message("sum(P2-P1): ", sum(P2-P1))
       message("sum(b-d):   ", sum(b-d))
@@ -23,24 +25,23 @@ function(P1,P2,d,b,m=NULL,net=FALSE,d.adj=FALSE,...){
   y[,,]<-0
   
   #step 1-2a take off deaths
-  d.mat<-ipf2(ctot=d,m=P1)$mu
-  if(d.adj==TRUE){
-    if(net==TRUE){
-      stop("set net to FALSE, currently have two conflicting methods to balance data")
-    }
+  if(is.null(d.mat))
+    d.mat<-ipf2(ctot=d,m=P1)$mu
+  if(method=="deaths"){
     d.mat<-ipf2(ctot=d,rtot=rowSums(P1) + b - rowSums(P2),m=P1)$mu  
   }
   y[1:R,R+1,]<-t(d.mat)
   P1.adj<-P1-d.mat
   
   #step 1-2b take off births
-  b.mat<-diag(b)
+  if(is.null(b.mat))
+    b.mat<-diag(b)
   y[R+1,1:R,]<-b.mat
   P2.adj<-P2-b.mat
   
   #step 3-4a take off moves in from external or adjust P1.adj rows
   dif<-rowSums(P1.adj) - rowSums(P2.adj)
-  if(net==FALSE){
+  if(method=="outside" | method=="deaths"){
     #following is in versions <1.3. is wrong. those leaving contolled for in P1, like those who die
     #this (in the #) is labelled in.mat but should be out.mat (where the dif>0). should have offset P1.adj, where they leave from, not P2.adj
     #in.mat<-t(ipf2(ctot=pmax(dif,0),m=t(P2.adj))$mu)
@@ -50,12 +51,12 @@ function(P1,P2,d,b,m=NULL,net=FALSE,d.adj=FALSE,...){
     P1.adj<-P1.adj-out.mat
     y[1:R,R+2,]<-t(out.mat)
   }
-  if(net==TRUE){
+  if(method=="stocks"){
     P1.adj<-ipf2(rtot=rowSums(P1.adj)-dif/2,ctot=colSums(P1.adj),m=P1.adj)$mu
   }
   
   #step 3-4b take off moves out from external or adjust P2.adj rows
-  if(net==FALSE){
+  if(method=="outside" | method=="deaths"){
     #following is in versions <1.3. is wrong. those arriving contolled for in P2, like those who are born
     #this (in the #) is labelled out.mat but should be in.mat (where the dif<0). should have offset P2.adj, where they arrive too, not P1.adj
     #out.mat<-t(ipf2(ctot=pmax(-dif,0),m=t(P1.adj))$mu)
@@ -65,7 +66,7 @@ function(P1,P2,d,b,m=NULL,net=FALSE,d.adj=FALSE,...){
     P2.adj<-P2.adj-in.mat
     y[R+2,1:R,]<-t(in.mat)
   }
-  if(net==TRUE){
+  if(method=="stocks"){
     P2.adj<-ipf2(rtot=rowSums(P2.adj)+dif/2,ctot=colSums(P2.adj),m=P2.adj)$mu
   }
   

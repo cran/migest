@@ -1,5 +1,5 @@
 ipf3 <-
-function(rtot=NULL,ctot=NULL,m=NULL,tol=1e-05,maxit=500,iter=TRUE){
+function(rtot=NULL,ctot=NULL,m=NULL,tol=1e-05,maxit=500,verbose=TRUE){
   if(any(round(colSums(rtot))!=round(rowSums(ctot))))
     stop("row and column totals are not equal for one or more sub-tables, ensure colSums(rtot)==rowSums(ctot)")
   n<-list(ik=rtot,
@@ -31,7 +31,7 @@ function(rtot=NULL,ctot=NULL,m=NULL,tol=1e-05,maxit=500,iter=TRUE){
     
     it<-it+1
     max.diff<-max(abs(unlist(n)-unlist(mu.marg)))
-    if(iter==TRUE)
+    if(verbose==TRUE)
       cat(c(it, max.diff), "\n")
   }
   return(list(mu=mu,it=it,tol=max.diff))

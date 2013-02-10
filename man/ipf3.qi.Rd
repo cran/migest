@@ -12,7 +12,7 @@ where \eqn{m_{ijk}} is a set of prior estimates for \eqn{y_{ijk}} and is no more
 }
 \usage{
 ipf3.qi(rtot = NULL, ctot = NULL, dtot = NULL, m = NULL, speed = TRUE, tol = 1e-05, 
-        maxit = 500, iter = TRUE)
+        maxit = 500, verbose = TRUE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -35,10 +35,10 @@ Speeds up the IPF algorithm by minimising sufficient statistics.
 Tolerance level for parameter estimation.
 }
   \item{maxit}{
-Maximum number of iterations for parameter estimation.
+Maximum number of verboseations for parameter estimation.
 }
-  \item{iter}{
-Print the parameter estimates at each iteration. By default \code{FALSE}.
+  \item{verbose}{
+Print the parameter estimates at each verboseation. By default \code{FALSE}.
 }
 }
 \details{
@@ -50,7 +50,7 @@ The user must ensure that the row and column totals in each table sum to the sam
 Returns a \code{list} object with
   \item{mu }{Array of indirect estimates of origin-destination matrices by migrant characteristic}
   \item{it }{Iteration count}
-  \item{tol }{Tolerance level at final iteration}
+  \item{tol }{Tolerance level at final verboseation}
 }
 \references{
 Abel, G. J. (2013). Estimating Global Migration Flow Tables Using Place of Birth. \emph{Demographic Research} 28, (18) 505-546

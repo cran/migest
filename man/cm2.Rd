@@ -10,7 +10,7 @@ as introduced by Willekens (1999). The  \eqn{\alpha_i} and  \eqn{\beta_j} repres
 }
 \usage{
 cm2(rtot = NULL, ctot = NULL, m = matrix(1, length(rtot), length(ctot)), 
-    tol = 1e-05, maxit = 500, iter = TRUE)
+    tol = 1e-05, maxit = 500, verbose = TRUE)
 }
 \arguments{
   \item{rtot}{
@@ -26,10 +26,10 @@ Auxiliary matrix. By default set to 1 for all origin-destination combinations.
 Tolerance level for parameter estimation.
 }
   \item{maxit}{
-Maximum number of iterations for parameter estimation.
+Maximum number of verboseations for parameter estimation.
 }
-  \item{iter}{
-Print the parameter estimates at each iteration. By default \code{TRUE}.
+  \item{verbose}{
+Print the parameter estimates at each verboseation. By default \code{TRUE}.
 }
 }
 \details{

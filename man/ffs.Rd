@@ -7,7 +7,7 @@ Flows from Stocks Methodology
 Estimates migrant transitions flows between two sequential migrant stock tables.
 }
 \usage{
-ffs(P1, P2, d, b, m = NULL, net=FALSE, d.adj=FALSE, ...)
+ffs(P1, P2, d, b, m = NULL, method = "stocks", b.mat = NULL, d.mat = NULL, ...)
 }
 \arguments{
   \item{P1}{
@@ -25,32 +25,33 @@ Number of births between time \emph{t} and \emph{t}+1 in each region.
   \item{m}{
 Array of auxiliary data. By default set to 1 for all origin-destination-migrant type combinations.
 }
-  \item{net}{
-Calcualate adjusted stock tables to match the row totals of the stock table after demographic accounting. By default \code{FALSE}.
+  \item{method}{
+Method used to set adjust row margin totals of \code{P1} and \code{P2} to equal. By default \code{method="stocks"}. Can also take values \code{method="outside"} or \code{method="deaths"}. See details for explanation on each method.
 }
-  \item{d.adj}{
-Calculate deaths by place of residence table to match the row totals of the stock table after demographic accounting. By default \code{FALSE}.
+  \item{b.mat}{
+A matrix containing the number of births during the period in each birthplace (rows) by place of residence (columns) combination created by the user. By default, this argument is \code{NULL}, and hence within the function a \code{b.mat} is formed as a diagonal matrix of \code{b} (i.e. all births happen in their respective place of residence at the end of the period, there are no infant migrants.)
+}
+  \item{d.mat}{
+A matrix containing the number of deaths during the period in each birthplace (rows) by place of residence (columns) combination created by the user. By default, this argument is \code{NULL}, and hence within the function a \code{d.mat} is formed as a proportional allocation of \code{d} over all populations (i.e. the mortality rate in each place of birth sub-group (native born and all foreign born stocks) is the same.)
 }
   \item{\dots}{
 Additional arguments passes to \code{\link{ipf3.qi}}.
 }
 }
 \details{
-Estimates migrant transitions flows between two sequential migrant stock tables as shown in Abel (2013). The length of \code{b} and \code{d} must equal the number of rows in \code{P1} and number of columns in \code{P2}.
+Estimates migrant transitions flows between two sequential migrant stock tables as shown in Abel (2013), when \code{method="outside"}. The length of \code{b} and \code{d} must equal the number of rows in \code{P1} and number of columns in \code{P2}.
 
-Setting \code{net=TRUE} uses an alternative demographic accounting method to adjusted stock tables to match the row totals of the stock table after demographic accounting. Setting \code{adj.d=TRUE} uses the calcualtion of the deaths by place of residence table to match the row totals of the stock table after demographic accounting. Both of these options maintain the net migration flow implied by the population, birth and death data. Only one of these arguments can be set to \code{TRUE}. Discussion of these methods is given in Abel (2013b).
+Setting \code{method="stocks"} estimates migration flows using an alternative demographic accounting method to adjusted stock tables to match the row totals of the stock table after demographic accounting. Setting \code{method="deaths"} uses the calculation of the deaths by place of residence table to match the row totals of the stock table after demographic accounting. Note, when \code{b} and \code{d} are equal, the same estimated flows from stocks are obtained regardless of the \code{method} argument. Both of these options maintain the net migration flow implied by the population, birth and death data. I still need to write up these methods. 
 }
 \value{
 Returns a \code{list} object with:
   \item{mu }{Array of indirect estimates of origin-destination matrices by place of birth.}
   \item{it }{Iteration count.}
-  \item{tol }{Tolerance level at final iteration.}
+  \item{tol }{Tolerance level at final verboseation.}
   \item{y }{Array of indirect estimates of origin-destination matrices by place of birth with additional rows and columns for births, deaths and moves to other regions.}
 }
 \references{
 Abel, G. J. (2013). Estimating Global Migration Flow Tables Using Place of Birth. \emph{Demographic Research} 28, (18) 505-546
-
-Abel, G. J. (2013b). Combining Bilateral Migrant Stock and Net Migration Flow Information to Estimate Global Flow Tables. \emph{Vienna Institute of Demography Working Paper} Forthcoming.
 }
 \author{
 Guy J. Abel
@@ -95,7 +96,7 @@ addmargins(P2)
 b <- c(80, 20, 40, 60)
 d <- c(70, 30, 50, 10)
 
-y <- ffs(P1, P2, d, b)
+y <- ffs(P1, P2, d, b, method="outside")
 # display with row, col and table totals
 round(addmargins(y$mu), 1)
 # display with row and col totals

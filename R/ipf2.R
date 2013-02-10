@@ -1,5 +1,5 @@
 ipf2 <-
-function(rtot=NULL,ctot=NULL,m=matrix(1,length(rtot),length(ctot)),tol=1e-05,maxit=500,iter=FALSE){
+function(rtot=NULL,ctot=NULL,m=matrix(1,length(rtot),length(ctot)),tol=1e-05,maxit=500,verbose=FALSE){
   if(!is.null(rtot) & !is.null(ctot))
     if(round(sum(rtot))!=round(sum(ctot))) 
       stop("row and column totals are not equal, ensure sum(rtot)==sum(ctot)")
@@ -8,7 +8,7 @@ function(rtot=NULL,ctot=NULL,m=matrix(1,length(rtot),length(ctot)),tol=1e-05,max
   mu<-m
   mu.marg<-n
   m.fact<-n
-  if(iter==TRUE)
+  if(verbose==TRUE)
     rd<-paste("%.",nchar(format(tol,scientific=FALSE))-2,"f",sep="")
   it<-0; max.diff<-tol*2
   while(it==0 | max.diff>tol & it<maxit ){
@@ -28,8 +28,8 @@ function(rtot=NULL,ctot=NULL,m=matrix(1,length(rtot),length(ctot)),tol=1e-05,max
     }
     it<-it+1
     max.diff<-max(abs(unlist(n)-unlist(mu.marg)))
-    if(iter==TRUE)
-      cat(sprintf(rd,unlist(m.fact)), fill = T)
+    if(verbose==TRUE)
+      cat(sprintf(rd,unlist(m.fact)), fill = TRUE)
   }
   return(list(mu=mu,it=it,tol=max(abs(unlist(n)-unlist(mu.marg)))))
 }

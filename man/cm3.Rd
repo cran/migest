@@ -9,7 +9,7 @@ The \code{cm3} function finds the maximum likelihood estimates for parameters in
 as introduced by Abel (2005). The \eqn{\alpha_{i}} and  \eqn{\beta_{j}} represent background information related to  the characteristics of the origin and destinations respectively. The \eqn{m_{ijk}} factor represents auxiliary information on origin-destination migration flows by a migrant characteristic (such as age, sex, disability, household type, economic status, etc.). This method is useful for combining data from detailed data collection processes (such as a Census) with more up-to-date information on migration inflows and outflows (where details on movements by migrant characteristics are not known).
 }
 \usage{
-cm3(rtot = NULL, ctot = NULL, m, tol = 1e-05, maxit = 500, iter = FALSE)
+cm3(rtot = NULL, ctot = NULL, m, tol = 1e-05, maxit = 500, verbose = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -26,10 +26,10 @@ Array of auxiliary data. By default set to 1 for all origin-destination-migrant 
 Tolerance level for parameter estimation.
 }
   \item{maxit}{
-Maximum number of iterations for parameter estimation.
+Maximum number of verboseations for parameter estimation.
 }
-  \item{iter}{
-Print the parameter estimates at each iteration. By default \code{FALSE}.
+  \item{verbose}{
+Print the parameter estimates at each verboseation. By default \code{FALSE}.
 }
 }
 \details{
@@ -66,7 +66,7 @@ round(addmargins(y$N))
 y <- cm3(rtot = c(170, 120, 410), ctot = c(500, 140, 60), 
         m = array(c(5, 1, 2, 7, 4, 2, 5, 9, 5, 4, 3, 1), dim = c(2, 2, 3), 
         dimnames = list(orig = dn, dest = dn, type = c("0--15", "15-60", ">60"))),
-        iter = FALSE)
+        verbose = FALSE)
 # display with row, col and table totals
 round(addmargins(y$N)) 
 }
