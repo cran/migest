@@ -1,4 +1,4 @@
-cf53f093abccf7e8b01cc8382dfd824a *DESCRIPTION
+482693880ecbf9a3805391bc507a8685 *DESCRIPTION
 df390c53434517b304ac5db487184641 *NAMESPACE
 c30576535fc13fc3963dfd6c959c5494 *R/cm2.R
 c1bc268e9f57f36517a01a7f22cf4069 *R/cm3.R
@@ -6,9 +6,15 @@ df563a8663384c66646f25b4dff6e373 *R/ffs.R
 5a09b46fe74bab09224c52b110717bae *R/fm.R
 8d0adc5e3eae5432b2d51c44444e76a2 *R/ipf2.R
 db0b93648ece1a78668d96bf45051dc0 *R/ipf3.R
-f0d7297ce02f8a435cb6130d6bd352e4 *R/ipf3.qi.R
+ecd2abd3bec496028b579d9255fce8a7 *R/ipf3.qi.R
+5da0fc387268056dcd907d4ee48c0fa5 *R/migest-internal.R
 11e19613999ac6ca7987aaddcd8a3f02 *R/rc9.R
-f8fcc7ec696644380308e6c997b15241 *data/rc9.fund.rda
+0574e3b17ca03d0fd69319733ffd10c4 *data/rc9.fund.rda
+c01062b99107d0969b19fee3a1610b86 *demo/00Index
+d0e00ee547d6954e3b7f8ce3876298b3 *demo/cfplot_nat.R
+d71d83fb1c60849dc8e52a60118ee251 *demo/cfplot_reg.R
+3cdd8bb8464b3b85aaa2dbb3140ef3a3 *inst/science/country_custom.txt
+1b4d72bacdb3904e0031dd216ead059f *inst/science/region_custom.txt
 2b0415c7abcfceb55148d8b23cd0088d *man/cm2.Rd
 ef87d1a50e96157f6cfd72384dba7931 *man/cm3.Rd
 070db49e4d0152a64fe9ecde9322c7a1 *man/ffs.Rd
@@ -16,6 +22,6 @@ a33f8c708e36d3c9b682cd4bd7b9f55f *man/fm.Rd
 92111613170b8a8fcc02b5d305a909b4 *man/ipf2.Rd
 b94b609c4f6293510f7cd5419fc41c4a *man/ipf3.Rd
 74cf80c50db083f77024dc2190d34910 *man/ipf3.qi.Rd
-87f0911b8f4fb53540931e8fffcb727f *man/migest-package.Rd
+502aa27e6f318dea65daef9b14bbff9d *man/migest-package.Rd
 08150f7a6f1d68d46cf92e3d0650c159 *man/rc9.Rd
 df29a11d04b7b2d7e1996026fffe04af *man/rc9.fund.Rd

@@ -11,8 +11,9 @@ function(rtot=NULL,ctot=NULL,dtot=NULL,m=NULL,speed=TRUE,tol=1e-05,maxit=500,ver
   #set up diagonals
   df1<-expand.grid(a = 1:R, b = 1:R)
   if(is.null(dtot)){
-    n$ijk<-array(1,c(R,R,R))
-    n$ijk<-with(df1, replace(n$ijk, cbind(a, a, b),  apply(cbind(c(n$ik),c(n$jk)),1,min) ))
+    dtot<-array(1,c(R,R,R))
+    dtot<-with(df1, replace(dtot, cbind(a, a, b),  apply(cbind(c(n$ik),c(n$jk)),1,min) ))
+    n$ijk<-dtot
   }
   
   #set up offset
@@ -25,7 +26,6 @@ function(rtot=NULL,ctot=NULL,dtot=NULL,m=NULL,speed=TRUE,tol=1e-05,maxit=500,ver
   
   #alter ss (to speed up)
   if(speed==TRUE){
-    n.old<-n
     n$ik<-n$ik-(apply(n$ijk,c(1,3),sum)-(R-1))
     n$jk<-n$jk-(apply(n$ijk,c(2,3),sum)-(R-1))
     n$ijk<-with(df1, replace(n$ijk, cbind(a, a, b),  0 ))
@@ -58,13 +58,9 @@ function(rtot=NULL,ctot=NULL,dtot=NULL,m=NULL,speed=TRUE,tol=1e-05,maxit=500,ver
     max.diff<-max(abs(unlist(n)-unlist(mu.marg)))
     if(verbose==TRUE)
       cat(c(it, max.diff), "\n")
-    addmargins(mu)
-    addmargins(n$ik)
-    addmargins(mu.marg$ik)
-    
   }
   if(speed==TRUE){
-    mu<-with(expand.grid(a = 1:R, b = 1:R), replace(mu, cbind(a, a, b), apply(cbind(c(n.old$ik),c(n.old$jk)),1,min) ))
+    mu<-with(df1, replace(mu, cbind(a, a, b), c(sapply(1:R, function(i) diag(dtot[,,i]))) ))
   }
   return(list(mu=mu,it=it,tol=max.diff))
 }

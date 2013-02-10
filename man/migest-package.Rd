@@ -21,7 +21,7 @@ Guy J. Abel
 }
 \references{
 Blog posts with some additional details of the implementation of functions in the package can be found at:
-\url{http://gjabel.wordpress.com/category/r/fanplot/} 
+\url{http://gjabel.wordpress.com/category/r/migest/} 
 
 Abel, G. J. (2005) \emph{The Indirect Estimation of Elderly Migrant Flows in England and Wales} (MS.c. Thesis). University of Southampton 
 

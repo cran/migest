@@ -1,7 +1,7 @@
 Package: migest
 Type: Package
 Title: Useful R code for the Estimation of Migration
-Version: 1.4
+Version: 1.5
 Date: 2013-02-10
 Author: Guy J. Abel
 Maintainer: Guy J. Abel <g.j.abel@gmail.com>
@@ -10,7 +10,7 @@ License: GPL-2
 URL: http://gjabel.wordpress.com/category/r/migset/
 LazyLoad: yes
 LazyData: yes
-Packaged: 2013-10-02 13:15:37 UTC; gabel
+Packaged: 2014-03-27 14:38:04 UTC; gabel
 NeedsCompilation: no
 Repository: CRAN
-Date/Publication: 2013-10-02 16:01:02
+Date/Publication: 2014-03-27 18:54:24
