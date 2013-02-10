@@ -27,7 +27,10 @@ function(rtot=NULL,ctot=NULL,m=matrix(1,length(rtot),length(ctot)),tol=1e-05,max
       mu <- sweep(mu, 1, m.fact$i, "*")
     }
     it<-it+1
-    max.diff<-max(abs(unlist(n)-unlist(mu.marg)))
+    #max.diff<-max(abs(unlist(n)-unlist(mu.marg)))
+    #speeds up a lot if get rid of unlist (new to v1.7)
+    max.diff<-max(abs(c(n$i-mu.marg$i, n$j-mu.marg$j)))
+    
     if(verbose==TRUE)
       cat(sprintf(rd,unlist(m.fact)), fill = TRUE)
   }

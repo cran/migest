@@ -58,9 +58,11 @@ Guy J. Abel
 dn <- LETTERS[1:2]
 y <- cm2(rtot = c(18, 20), ctot = c(16, 22), m = matrix(c(5, 1, 2, 7), ncol = 2, 
         dimnames = list(orig = dn, dest = dn)))
+y
 
 ## with all elements of offset equal (independence fit)
 y <- cm2(rtot = c(18, 20), ctot = c(16, 22))
+y
 
 ## with bigger matrix
 dn <- LETTERS[1:3]

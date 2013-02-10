@@ -30,7 +30,10 @@ function(rtot=NULL,ctot=NULL,m=NULL,tol=1e-05,maxit=500,verbose=TRUE){
     mu <- sweep(mu, c(2,3), m.fact$jk, "*")
     
     it<-it+1
-    max.diff<-max(abs(unlist(n)-unlist(mu.marg)))
+    #max.diff<-max(abs(unlist(n)-unlist(mu.marg)))
+    #speeds up a lot if get rid of unlist (new to v1.7)
+    max.diff<-max(abs(c(n$ik-mu.marg$ik, n$jk-mu.marg$jk)))
+    
     if(verbose==TRUE)
       cat(c(it, max.diff), "\n")
   }

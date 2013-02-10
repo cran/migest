@@ -52,7 +52,7 @@ circos.par(cell.padding=c(0,0,0,0), track.margin=c(0,0.1), start.degree = 90, ga
 circos.initialize(factors = df1$region, xlim = cbind(df1$xmin, df1$xmax))
 
 #plot sectors
-circos.trackPlotRegion(ylim = c(0, 1), factors = df1$region, track.height=0.1, 
+circos.trackPlotRegion(ylim = c(0, 1), factors = df1$region, track.height=0.1, bg.border = NA, bg.col = NA, bg.lty =0, bg.lwd=0.0001,
                        #panel.fun for each sector
                        panel.fun = function(x, y) {
                          #select details of current sector
@@ -62,7 +62,7 @@ circos.trackPlotRegion(ylim = c(0, 1), factors = df1$region, track.height=0.1,
                          ylim = get.cell.meta.data("ylim")
                        
                          #plot country labels
-                         circos.text(x=mean(xlim), y=2.2, labels=name, direction = "arc", cex=0.8)
+                         circos.text(x=mean(xlim), y=2.2, labels=name, facing = "bending", cex=0.8)
                          
                          #plot main sector
                          circos.rect(xleft=xlim[1], ybottom=ylim[1], xright=xlim[2], ytop=ylim[2], 
@@ -105,7 +105,7 @@ for(k in 1:nrow(df2)){
   #plot link
   circos.link(sector.index1=df1$region[i], point1=c(df1$sum1[i], df1$sum1[i] + abs(m[i, j])),
               sector.index2=df1$region[j], point2=c(df1$sum2[j], df1$sum2[j] + abs(m[i, j])),
-              col = df1$lcol[i], top.ratio=0.66, top.ratio.low=0.67)
+              col = df1$lcol[i])
   
   #update sum1 and sum2 for use when plotting the next link
   df1$sum1[i] = df1$sum1[i] + abs(m[i, j])

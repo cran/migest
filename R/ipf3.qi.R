@@ -55,7 +55,9 @@ function(rtot=NULL,ctot=NULL,dtot=NULL,m=NULL,speed=TRUE,tol=1e-05,maxit=500,ver
     mu <- mu*m.fact$ijk
     
     it<-it+1
-    max.diff<-max(abs(unlist(n)-unlist(mu.marg)))
+    #max.diff<-max(abs(unlist(n)-unlist(mu.marg))) 
+    #speeds up a lot if get rid of unlist (new to v1.6)
+    max.diff<-max(abs(c(n$ik-mu.marg$ik, n$jk-mu.marg$jk, n$ijk-mu.marg$ijk)))
     if(verbose==TRUE)
       cat(c(it, max.diff), "\n")
   }

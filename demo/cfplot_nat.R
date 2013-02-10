@@ -63,12 +63,12 @@ circos.trackPlotRegion(ylim = c(0, 1), factors = df1$region, track.height=0.1,
                          
                          #text direction (dd) and adjusmtents (aa)
                          theta = circlize(mean(xlim), 1.3)[1, 1] %% 360
-                         dd <- ifelse(theta < 90 || theta > 270, "vertical_right", "vertical_left")
+                         dd <- ifelse(theta < 90 || theta > 270, "clockwise", "reverse.clockwise")
                          aa = c(1, 0.5)
                          if(theta < 90 || theta > 270)  aa =c(0, 0.5)
                          
                          #plot country labels
-                         circos.text(x=mean(xlim), y=1.7, labels=name, direction = dd, cex=0.6,  adj = aa)
+                         circos.text(x=mean(xlim), y=1.7, labels=name, facing = dd, cex=0.6,  adj = aa)
                          
                          #plot main sector
                          circos.rect(xleft=xlim[1], ybottom=ylim[1], xright=xlim[2], ytop=ylim[2], 
@@ -110,7 +110,7 @@ for(k in 1:nrow(df2)){
   #plot link
   circos.link(sector.index1=df1$region[i], point1=c(df1$sum1[i], df1$sum1[i] + abs(m[i, j])),
               sector.index2=df1$region[j], point2=c(df1$sum2[j], df1$sum2[j] + abs(m[i, j])),
-              col = df1$lcol[i], top.ratio=0.66, top.ratio.low=0.67)
+              col = df1$lcol[i])
   
   #update sum1 and sum2 for use when plotting the next link
   df1$sum1[i] = df1$sum1[i] + abs(m[i, j])

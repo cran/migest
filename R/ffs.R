@@ -1,7 +1,9 @@
 ffs <-
-function(P1,P2,d,b,m=NULL,method="stocks",b.mat=NULL,d.mat=NULL,...){
+function(P1,P2,d,b,m=NULL,method="stocks",b.mat=NULL,d.mat=NULL,b.deduct="native.gt0",...){
   if(!(method %in% c("outside","stocks","deaths")) | length(method)!=1)
     stop("method must be one of outside, stocks or deaths")
+  if(!(b.deduct %in% c("native.only","native.gt0")) | length(b.deduct)!=1)
+    stop("method must be one of di, stocks or deaths")
   R<-nrow(P1)
   #set up offset
   if(is.null(m)){
@@ -25,6 +27,7 @@ function(P1,P2,d,b,m=NULL,method="stocks",b.mat=NULL,d.mat=NULL,...){
   y[,,]<-0
   
   #step 1-2a take off deaths
+  message("Adjust for Deaths...")
   if(is.null(d.mat))
     d.mat<-ipf2(ctot=d,m=P1)$mu
   if(method=="deaths"){
@@ -34,12 +37,22 @@ function(P1,P2,d,b,m=NULL,method="stocks",b.mat=NULL,d.mat=NULL,...){
   P1.adj<-P1-d.mat
   
   #step 1-2b take off births
+  message("Adjust for Births...")
   if(is.null(b.mat))
     b.mat<-diag(b)
   y[R+1,1:R,]<-b.mat
   P2.adj<-P2-b.mat
+  #adjust for negative nb sums after birth deduction...spread births to all population where needed (new to v1.6)
+  if(b.deduct=="native.gt0"){
+    ii<-diag(P2.adj<0)
+    if(sum(ii)>0){
+      b.mat[,ii]<-ipf2(ctot=b,m=P2)$mu[,ii]
+      P2.adj<-P2-b.mat
+    }
+  }
   
   #step 3-4a take off moves in from external or adjust P1.adj rows
+  message("Remaining Adjustments (P1)...")
   dif<-rowSums(P1.adj) - rowSums(P2.adj)
   if(method=="outside" | method=="deaths"){
     #following is in versions <1.3. is wrong. those leaving contolled for in P1, like those who die
@@ -52,10 +65,12 @@ function(P1,P2,d,b,m=NULL,method="stocks",b.mat=NULL,d.mat=NULL,...){
     y[1:R,R+2,]<-t(out.mat)
   }
   if(method=="stocks"){
-    P1.adj<-ipf2(rtot=rowSums(P1.adj)-dif/2,ctot=colSums(P1.adj),m=P1.adj)$mu
+    #was not reaching convergence of near zero difference in maxdiff in <v1.5, i.e. either row or col totals in estimates were not matching arguments.
+    P1.adj<-ipf2(rtot=rowSums(P1.adj)-dif/2,ctot=colSums(P1.adj), m=P1.adj, maxit=100000, tol=0.1)$mu
   }
   
   #step 3-4b take off moves out from external or adjust P2.adj rows
+  message("Remaining Adjustments (P2)...")
   if(method=="outside" | method=="deaths"){
     #following is in versions <1.3. is wrong. those arriving contolled for in P2, like those who are born
     #this (in the #) is labelled out.mat but should be in.mat (where the dif<0). should have offset P2.adj, where they arrive too, not P1.adj
@@ -67,10 +82,12 @@ function(P1,P2,d,b,m=NULL,method="stocks",b.mat=NULL,d.mat=NULL,...){
     y[R+2,1:R,]<-t(in.mat)
   }
   if(method=="stocks"){
-    P2.adj<-ipf2(rtot=rowSums(P2.adj)+dif/2,ctot=colSums(P2.adj),m=P2.adj)$mu
+    #was not reaching convergence of near zero difference in maxdiff in <v1.5, i.e. either row or col totals in estimates were not matching arguments.
+    P2.adj<-ipf2(rtot=rowSums(P2.adj)+dif/2,ctot=colSums(P2.adj),m=P2.adj, maxit=100000, tol=0.1)$mu
   }
   
   #step 5 calculate
+  message("Calculate Flows...")
   #ipf<-ipf3.qi(rtot=t(P1.adj),ctot=P2.adj,m=m)
   ipf<-ipf3.qi(rtot=t(P1.adj),ctot=P2.adj,m=m,...)
   y[1:R,1:R,]<-ipf$mu
