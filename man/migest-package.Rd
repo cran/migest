@@ -12,18 +12,17 @@ The migest package contains a collection of R functions that are useful to estim
 \tabular{ll}{
 Package: \tab migest\cr
 Type: \tab Package\cr
-Version: \tab 1.0\cr
-Date: \tab 2012-10-31\cr
 License: \tab GPL-2\cr
 }
 The routines in this package include methods to estimate missing migration data when marginal totals are known. These can be grouped into functions for origin-destination matrices (\code{\link{cm2}} and \code{\link{ipf2}}) and functions for more than two dimensions (\code{\link{cm3}}, \code{\link{ipf3}} and \code{\link{ipf3.qi}}). All these routines are based on indirect estimation methods where marginal totals are known, under a Poisson regression (log-linear) model assumption. 
 }
 \author{
 Guy J. Abel
-
-Maintainer: Guy J. Abel <g.j.abel@gmail.com>
 }
 \references{
+Blog posts with some additional details of the implementation of functions in the package can be found at:
+\url{http://gjabel.wordpress.com/category/r/fanplot/} 
+
 Abel, G. J. (2005) \emph{The Indirect Estimation of Elderly Migrant Flows in England and Wales} (MS.c. Thesis). University of Southampton 
 
 Abel, G. J. (2013). Estimating Global Migration Flow Tables Using Place of Birth. \emph{Demographic Research} 28, (18) 505-546

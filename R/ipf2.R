@@ -16,12 +16,14 @@ function(rtot=NULL,ctot=NULL,m=matrix(1,length(rtot),length(ctot)),tol=1e-05,max
       mu.marg$j <- apply(mu,2,sum)
       m.fact$j <- n$j/mu.marg$j
       m.fact$j[is.nan(m.fact$j)]<-0
+      m.fact$j[is.infinite(m.fact$j)]<-0
       mu <- sweep(mu, 2, m.fact$j, "*")
     }
     if(!is.null(rtot)){
       mu.marg$i <- apply(mu,1,sum)
       m.fact$i <- n$i/mu.marg$i
       m.fact$i[is.nan(m.fact$i)]<-0
+      m.fact$i[is.infinite(m.fact$i)]<-0
       mu <- sweep(mu, 1, m.fact$i, "*")
     }
     it<-it+1

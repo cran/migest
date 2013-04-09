@@ -20,12 +20,13 @@ function(rtot=NULL,ctot=NULL,m=NULL,tol=1e-05,maxit=500,iter=TRUE){
     mu.marg$ik <- apply(mu,c(1,3),sum)
     m.fact$ik <- n$ik/mu.marg$ik
     m.fact$ik[is.nan(m.fact$ik)]<-0
-    m.fact$ik[m.fact$ik==Inf]<-0
+    m.fact$ik[is.infinite(m.fact$ik)]<-0
     mu <- sweep(mu, c(1,3), m.fact$ik, "*")
     
     mu.marg$jk <- apply(mu, c(2,3), sum)
     m.fact$jk <- n$jk/mu.marg$jk
     m.fact$jk[is.nan(m.fact$jk)]<-0
+    m.fact$jk[is.infinite(m.fact$jk)]<-0
     mu <- sweep(mu, c(2,3), m.fact$jk, "*")
     
     it<-it+1

@@ -28,7 +28,7 @@ function(P1,P2,d,b,m=NULL,net=FALSE,d.adj=FALSE,...){
     if(net==TRUE){
       stop("set net to FALSE, currently have two conflicting methods to balance data")
     }
-    d.mat<-ipf2(ctot=d,rtot=-1*(rowSums(P2)-(rowSums(P1)+b)),m=P1)$mu  
+    d.mat<-ipf2(ctot=d,rtot=rowSums(P1) + b - rowSums(P2),m=P1)$mu  
   }
   y[1:R,R+1,]<-t(d.mat)
   P1.adj<-P1-d.mat
@@ -41,9 +41,14 @@ function(P1,P2,d,b,m=NULL,net=FALSE,d.adj=FALSE,...){
   #step 3-4a take off moves in from external or adjust P1.adj rows
   dif<-rowSums(P1.adj) - rowSums(P2.adj)
   if(net==FALSE){
-    in.mat<-t(ipf2(ctot=pmax(dif,0),m=t(P2.adj))$mu)
-    P1.adj<-P1.adj-in.mat
-    y[R+2,1:R,]<-t(in.mat)
+    #following is in versions <1.3. is wrong. those leaving contolled for in P1, like those who die
+    #this (in the #) is labelled in.mat but should be out.mat (where the dif>0). should have offset P1.adj, where they leave from, not P2.adj
+    #in.mat<-t(ipf2(ctot=pmax(dif,0),m=t(P2.adj))$mu)
+    #P1.adj<-P1.adj-in.mat
+    #y[R+2,1:R,]<-t(in.mat)
+    out.mat<-t(ipf2(ctot=pmax(dif,0),m=t(P1.adj))$mu)
+    P1.adj<-P1.adj-out.mat
+    y[1:R,R+2,]<-t(out.mat)
   }
   if(net==TRUE){
     P1.adj<-ipf2(rtot=rowSums(P1.adj)-dif/2,ctot=colSums(P1.adj),m=P1.adj)$mu
@@ -51,9 +56,14 @@ function(P1,P2,d,b,m=NULL,net=FALSE,d.adj=FALSE,...){
   
   #step 3-4b take off moves out from external or adjust P2.adj rows
   if(net==FALSE){
-    out.mat<-t(ipf2(ctot=pmax(-dif,0),m=t(P1.adj))$mu)
-    P2.adj<-P2.adj-out.mat
-    y[1:R,R+2,]<-t(out.mat)
+    #following is in versions <1.3. is wrong. those arriving contolled for in P2, like those who are born
+    #this (in the #) is labelled out.mat but should be in.mat (where the dif<0). should have offset P2.adj, where they arrive too, not P1.adj
+    #out.mat<-t(ipf2(ctot=pmax(-dif,0),m=t(P1.adj))$mu)
+    #P2.adj<-P2.adj-out.mat
+    #y[1:R,R+2,]<-t(out.mat)
+    in.mat<-t(ipf2(ctot=pmax(-dif,0),m=t(P2.adj))$mu)
+    P2.adj<-P2.adj-in.mat
+    y[R+2,1:R,]<-t(in.mat)
   }
   if(net==TRUE){
     P2.adj<-ipf2(rtot=rowSums(P2.adj)+dif/2,ctot=colSums(P2.adj),m=P2.adj)$mu
