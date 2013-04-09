@@ -15,7 +15,7 @@ function(P1,P2,d,b,m=NULL,...){
   y[,,]<-0
   
   #step 1-2a take off deaths
-  d.mat<-t(ipf2(rt=d,m=t(P1))$mu)
+  d.mat<-ipf2(ct=d,m=P1)$mu
   #d.mat<-round(d.mat)
   y[1:R,R+1,]<-t(d.mat)
   P1.adj<-P1-d.mat

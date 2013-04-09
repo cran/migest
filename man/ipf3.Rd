@@ -43,7 +43,7 @@ Returns a \code{list} object with
   \item{tol }{Tolerance level at final iteration}
 }
 \references{
-Abel, G. J. (2012). Estimating Global Migration Flow Tables Using Place of Birth. \emph{Vienna Institute of Demography Working Paper} 01/2012
+Abel, G. J. (2013). Estimating Global Migration Flow Tables Using Place of Birth. \emph{Demographic Research} 28, (18) 505-546
 
 Agresti, A. (2002). \emph{Categorical Data Analysis} 2nd edition. Wiley.
 }

@@ -1,8 +1,8 @@
 Package: migest
 Type: Package
 Title: Useful R code for the Estimation of Migration
-Version: 1.0
-Date: 2012-10-31
+Version: 1.1
+Date: 2013-04-09
 Author: Guy J. Abel
 Maintainer: Guy J. Abel <g.j.abel@gmail.com>
 Description: The migest package contains a collection of R functions
@@ -14,6 +14,7 @@ Description: The migest package contains a collection of R functions
 License: GPL-2
 LazyLoad: yes
 LazyData: yes
-Packaged: 2012-11-05 11:14:29 UTC; gabel
+Packaged: 2013-04-09 09:45:31 UTC; gabel
+NeedsCompilation: no
 Repository: CRAN
-Date/Publication: 2012-11-06 16:32:31
+Date/Publication: 2013-04-09 12:49:10

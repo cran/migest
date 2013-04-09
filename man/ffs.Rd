@@ -40,7 +40,7 @@ Returns a \code{list} object with:
   \item{y }{Array of indirect estimates of origin-destination matrices by place of birth with additional rows and columns for births, deaths and moves to other regions.}
 }
 \references{
-Abel, G. J. (2012). Estimating Global Migration Flow Tables Using Place of Birth. \emph{Vienna Institute of Demography Working Paper} 01/2012
+Abel, G. J. (2013). Estimating Global Migration Flow Tables Using Place of Birth. \emph{Demographic Research} 28, (18) 505-546
 }
 \author{
 Guy J. Abel

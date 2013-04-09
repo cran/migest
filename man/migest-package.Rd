@@ -26,7 +26,7 @@ Maintainer: Guy J. Abel <g.j.abel@gmail.com>
 \references{
 Abel, G. J. (2005) \emph{The Indirect Estimation of Elderly Migrant Flows in England and Wales} (MS.c. Thesis). University of Southampton 
 
-Abel, G. J. (2012). Estimating Global Migration Flow Tables Using Place of Birth. \emph{Vienna Institute of Demography Working Paper} 01/2012
+Abel, G. J. (2013). Estimating Global Migration Flow Tables Using Place of Birth. \emph{Demographic Research} 28, (18) 505-546
 
 Raymer, J., G. J. Abel, and P. W. F. Smith (2007). Combining census and registration data to estimate detailed elderly migration flows in England and Wales. \emph{Journal of the Royal Statistical Society: Series A (Statistics in Society)} 170 (4), 891--908.
 

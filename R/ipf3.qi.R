@@ -38,17 +38,19 @@ function(rt=NULL,ct=NULL,dt=NULL,m=NULL,speed=TRUE,tol=1e-05,maxit=500,iter=TRUE
     mu.marg$ik <- apply(mu,c(1,3),sum)
     m.fact$ik <- n$ik/mu.marg$ik
     m.fact$ik[is.nan(m.fact$ik)]<-0
-    m.fact$ik[m.fact$ik==Inf]<-0
+    m.fact$ik[is.infinite(m.fact$ik)]<-0
     mu <- sweep(mu, c(1,3), m.fact$ik, "*")
     
     mu.marg$jk <- apply(mu, c(2,3), sum)
     m.fact$jk <- n$jk/mu.marg$jk
     m.fact$jk[is.nan(m.fact$jk)]<-0
+    m.fact$jk[is.infinite(m.fact$jk)]<-0
     mu <- sweep(mu, c(2,3), m.fact$jk, "*")
     
     mu.marg$ijk <- with(expand.grid(a = 1:R, b = 1:R), replace(n$ijk, cbind(a, a, b),  c(apply(mu,3,diag)) ))
     m.fact$ijk <- n$ijk/mu.marg$ijk
     m.fact$ijk[is.nan(m.fact$ijk)]<-0
+    m.fact$ijk[is.infinite(m.fact$ijk)]<-0
     mu <- mu*m.fact$ijk
     
     it<-it+1
