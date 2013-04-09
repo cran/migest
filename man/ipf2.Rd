@@ -5,18 +5,18 @@ Iterative Proportional Fitting Routine for the Indirect Estimation of Origin-Des
 }
 \description{
 The \code{ipf2} function finds the maximum likelihood estimates for fitted values in the log-linear model:
-\deqn{\log y_{ij} = \log alpha_{i} + \log beta_{j} + \log m_{ij} }
+\deqn{\log y_{ij} = \log \alpha_{i} + \log \beta_{j} + \log m_{ij} }
 where \eqn{m_{ij}} is a set of prior estimates for \eqn{y_{ij}} and itself is no more complex than the one being fitted. 
 }
 \usage{
-ipf2(rt = NULL, ct = NULL, m = matrix(1, length(rt), length(ct)), tol = 1e-05, 
+ipf2(rtot = NULL, ctot = NULL, m = matrix(1, length(rtot), length(ctot)), tol = 1e-05, 
         maxit = 500, iter = FALSE)
 }
 \arguments{
-  \item{rt}{
+  \item{rtot}{
 Origin (row) totals to constrain indirect estimates to.
 }
-  \item{ct}{
+  \item{ctot}{
 Destination (column) totals to constrain indirect estimates to.
 }
   \item{m}{
@@ -37,7 +37,7 @@ Iterative Proportional Fitting routine set up in a similar manner to Agresti (20
 
 The user must ensure that the row and column totals are equal in sum. Care must also be taken to allow the dimension of the auxiliary matrix (\code{m}) to equal those provided in the row and column totals.
 
-If only one of the margins is known, the function can still be run. The indirect estimates will correspond to the log-linear model without the \eqn{alpha_{i}} term if (\code{rt = NULL}) or without the \eqn{beta_{j}} term if (\code{ct = NULL})
+If only one of the margins is known, the function can still be run. The indirect estimates will correspond to the log-linear model without the \eqn{\alpha_{i}} term if (\code{rtot = NULL}) or without the \eqn{\beta_{j}} term if (\code{ctot = NULL})
 }
 \value{
 Returns a \code{list} object with
@@ -59,15 +59,15 @@ Guy J. Abel
 \examples{
 ## with Willekens (1999) data
 dn <- LETTERS[1:2]
-y <- ipf2(rt = c(18, 20), ct = c(16, 22), m = matrix(c(5, 1, 2, 7), ncol = 2, 
+y <- ipf2(rtot = c(18, 20), ctot = c(16, 22), m = matrix(c(5, 1, 2, 7), ncol = 2, 
         dimnames = list(orig = dn, dest = dn)))
 
 ## with all elements of offset equal
-y <- ipf2(rt = c(18, 20), ct = c(16, 22))
+y <- ipf2(rtot = c(18, 20), ctot = c(16, 22))
 
 ## with bigger matrix
 dn <- LETTERS[1:3]
-y <- ipf2(rt = c(170, 120, 410), ct = c(500, 140, 60), 
+y <- ipf2(rtot = c(170, 120, 410), ctot = c(500, 140, 60), 
         m = matrix(c(50, 10, 220, 120, 120, 30, 545, 0, 10), ncol = 3, 
         dimnames = list(orig = dn, dest = dn)))
 # display with row and col totals
@@ -75,6 +75,6 @@ round(addmargins(y$mu))
 
 ## only one margin known
 dn <- LETTERS[1:2]
-y <- ipf2(rt = c(18, 20), ct = NULL, m = matrix(c(5, 1, 2, 7), ncol = 2, 
+y <- ipf2(rtot = c(18, 20), ctot = NULL, m = matrix(c(5, 1, 2, 7), ncol = 2, 
         dimnames = list(orig = dn, dest = dn)))
 }

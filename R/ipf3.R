@@ -1,17 +1,17 @@
 ipf3 <-
-function(rt=NULL,ct=NULL,m=NULL,tol=1e-05,maxit=500,iter=TRUE){
-  if(any(round(colSums(rt))!=round(rowSums(ct))))
-    stop("row and column totals are not equal for one or more sub-tables, ensure colSums(rt)==rowSums(ct)")
-  n<-list(ik=rt,
-          jk=t(ct))
-  R<-dim(rt)[1]
+function(rtot=NULL,ctot=NULL,m=NULL,tol=1e-05,maxit=500,iter=TRUE){
+  if(any(round(colSums(rtot))!=round(rowSums(ctot))))
+    stop("row and column totals are not equal for one or more sub-tables, ensure colSums(rtot)==rowSums(ctot)")
+  n<-list(ik=rtot,
+          jk=t(ctot))
+  R<-dim(rtot)[1]
   
   #set up offset
   if(is.null(m)){
-    m<-array(1,c(dim(rt),dim(rt)[1]))
-    dimnames(m)<-list(orig=dimnames(rt)[[1]],dest=dimnames(ct)[[1]],pob=dimnames(rt)[[2]])
+    m<-array(1,c(dim(rtot),dim(rtot)[1]))
+    dimnames(m)<-list(orig=dimnames(rtot)[[1]],dest=dimnames(ctot)[[1]],pob=dimnames(rtot)[[2]])
   }
-
+  
   mu<-m
   mu.marg<-n
   m.fact<-n

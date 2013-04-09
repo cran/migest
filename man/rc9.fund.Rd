@@ -5,11 +5,19 @@
 Fundamental Parameters for Rogers-Castro Migration Schedule
 }
 \description{
-Set of fundamental parameters suggested by Rogers and Castro (1981)
+Set of fundamental parameters suggested by Rogers and Castro (1981).
 }
 \usage{data(rc9.fund)}
 \details{
-A \code{list} of the parameters required by the \code{\link{rc9}} function. Can be copied and altered to illustrate the effect of parameters
+A \code{list} of the parameters required by the \code{\link{rc9}} function:
+\deqn{ a_{1} = 0.02 }
+\deqn{ \alpha_{1} = 0.1 }
+\deqn{ a_{2} = 0.06 }
+\deqn{ \alpha_{2} = 0.1 }
+\deqn{ \mu_{2} = 20 }
+\deqn{ \lambda_{2} = 0.4 }
+\deqn{ c = 0.003 }
+Can be copied and altered to illustrate the effect of parameters.
 }
 \references{
 Rogers, A., and L. J. Castro. (1981). Model Migration Schedules. \emph{IIASA Research Report 81} RR-81-30

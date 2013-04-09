@@ -1,13 +1,13 @@
 \name{ffs}
 \alias{ffs}
 \title{
-Flows from Stock Methodology
+Flows from Stocks Methodology
 }
 \description{
 Estimates migrant transitions flows between two sequential migrant stock tables.
 }
 \usage{
-ffs(P1, P2, d, b, m = NULL, ...)
+ffs(P1, P2, d, b, m = NULL, net=FALSE, d.adj=FALSE, ...)
 }
 \arguments{
   \item{P1}{
@@ -25,12 +25,20 @@ Number of births between time \emph{t} and \emph{t}+1 in each region.
   \item{m}{
 Array of auxiliary data. By default set to 1 for all origin-destination-migrant type combinations.
 }
+  \item{net}{
+Calcualate adjusted stock tables to match the row totals of the stock table after demographic accounting. By default \code{FALSE}.
+}
+  \item{d.adj}{
+Calculate deaths by place of residence table to match the row totals of the stock table after demographic accounting. By default \code{FALSE}.
+}
   \item{\dots}{
 Additional arguments passes to \code{\link{ipf3.qi}}.
 }
 }
 \details{
-Estimates migrant transitions flows between two sequential migrant stock tables as shown in Abel (2012). The length of \code{b} and \code{d} must equal the number of rows in \code{P1} and number of columns in \code{P2}.
+Estimates migrant transitions flows between two sequential migrant stock tables as shown in Abel (2013). The length of \code{b} and \code{d} must equal the number of rows in \code{P1} and number of columns in \code{P2}.
+
+Setting \code{net=TRUE} uses an alternative demographic accounting method to adjusted stock tables to match the row totals of the stock table after demographic accounting. Setting \code{adj.d=TRUE} uses the calcualtion of the deaths by place of residence table to match the row totals of the stock table after demographic accounting. Both of these options maintain the net migration flow implied by the population, birth and death data. Only one of these arguments can be set to \code{TRUE}. Discussion of these methods is given in Abel (2013b).
 }
 \value{
 Returns a \code{list} object with:
@@ -41,6 +49,8 @@ Returns a \code{list} object with:
 }
 \references{
 Abel, G. J. (2013). Estimating Global Migration Flow Tables Using Place of Birth. \emph{Demographic Research} 28, (18) 505-546
+
+Abel, G. J. (2013b). Combining Bilateral Migrant Stock and Net Migration Flow Information to Estimate Global Flow Tables. \emph{Vienna Institute of Demography Working Paper} Forthcoming.
 }
 \author{
 Guy J. Abel

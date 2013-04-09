@@ -1,10 +1,10 @@
 ipf2 <-
-function(rt=NULL,ct=NULL,m=matrix(1,length(rt),length(ct)),tol=1e-05,maxit=500,iter=FALSE){
-  if(!is.null(rt) & !is.null(ct))
-    if(round(sum(rt))!=round(sum(ct))) 
-      stop("row and column totals are not equal, ensure sum(rt)==sum(ct)")
-  n<-list(i=rt,
-          j=ct)
+function(rtot=NULL,ctot=NULL,m=matrix(1,length(rtot),length(ctot)),tol=1e-05,maxit=500,iter=FALSE){
+  if(!is.null(rtot) & !is.null(ctot))
+    if(round(sum(rtot))!=round(sum(ctot))) 
+      stop("row and column totals are not equal, ensure sum(rtot)==sum(ctot)")
+  n<-list(i=rtot,
+          j=ctot)
   mu<-m
   mu.marg<-n
   m.fact<-n
@@ -12,13 +12,13 @@ function(rt=NULL,ct=NULL,m=matrix(1,length(rt),length(ct)),tol=1e-05,maxit=500,i
     rd<-paste("%.",nchar(format(tol,scientific=FALSE))-2,"f",sep="")
   it<-0; max.diff<-tol*2
   while(it==0 | max.diff>tol & it<maxit ){
-    if(!is.null(ct)){
+    if(!is.null(ctot)){
       mu.marg$j <- apply(mu,2,sum)
       m.fact$j <- n$j/mu.marg$j
       m.fact$j[is.nan(m.fact$j)]<-0
       mu <- sweep(mu, 2, m.fact$j, "*")
     }
-    if(!is.null(rt)){
+    if(!is.null(rtot)){
       mu.marg$i <- apply(mu,1,sum)
       m.fact$i <- n$i/mu.marg$i
       m.fact$i[is.nan(m.fact$i)]<-0

@@ -5,17 +5,17 @@ Iterative Proportional Fitting Routine for the Indirect Estimation of Origin-Des
 }
 \description{
 The \code{ipf3} function finds the maximum likelihood estimates for fitted values in the log-linear model:
-\deqn{ \log y_{ijk} = \log alpha_{i} + \log beta_{j} + \log lambda_{k} + \log gamma_{ik} + \log kappa_{jk} + \log m_{ijk} }
+\deqn{ \log y_{ijk} = \log \alpha_{i} + \log \beta_{j} + \log \lambda_{k} + \log \gamma_{ik} + \log \kappa_{jk} + \log m_{ijk} }
 where \eqn{m_{ijk}} is a set of prior estimates for \eqn{y_{ijk}} and is no more complex than the matrices being fitted.
 }
 \usage{
-ipf3(rt = NULL, ct = NULL, m = NULL, tol = 1e-05, maxit = 500, iter = TRUE)
+ipf3(rtot = NULL, ctot = NULL, m = NULL, tol = 1e-05, maxit = 500, iter = TRUE)
 }
 \arguments{
-  \item{rt}{
+  \item{rtot}{
 Matrix of origin totals (by migrant characteristic) to constrain indirect estimates to. Row of matrix corresponds to origin and column of table corresponds to migrant type/characteristic.
 }
-  \item{ct}{
+  \item{ctot}{
 Matrix of destination totals (by migrant characteristic) to constrain indirect estimates to. Row of matrix corresponds to destination and column of table corresponds to migrant type/characteristic.
 }
   \item{m}{
@@ -32,7 +32,7 @@ Print the parameter estimates at each iteration. By default \code{FALSE}.
 }
 }
 \details{
-Iterative Proportional Fitting routine set up in a similar manner to Agresti (2002, p.343). The arguments \code{rt} and \code{ct} take the row-table and column-table specific known margins.
+Iterative Proportional Fitting routine set up in a similar manner to Agresti (2002, p.343). The arguments \code{rtot} and \code{ctot} take the row-table and column-table specific known margins.
 
 The user must ensure that the row and column totals in each table sum to the same value. Care must also be taken to allow the dimension of the auxiliary matrix (\code{m}) to equal those provided in the row and column totals.
 }
@@ -65,7 +65,7 @@ addmargins(P1)
 addmargins(P2)
 
 # run ipf
-y <- ipf3(rt = t(P1), ct = P2)
+y <- ipf3(rtot = t(P1), ctot = P2)
 # display with row, col and table totals
 round(addmargins(y$mu), 1)
 # origin-destination flow table
@@ -73,7 +73,7 @@ round(fm(y$mu), 1)
 
 ## with alternative offset term
 dis <- array(c(1, 2, 3, 4, 2, 1, 5, 6, 3, 4, 1, 7, 4, 6, 7, 1), c(4, 4, 4))
-y <- ipf3(rt = t(P1), ct = P2, m = dis)
+y <- ipf3(rtot = t(P1), ctot = P2, m = dis)
 # display with row, col and table totals
 round(addmargins(y$mu), 1)
 # origin-destination flow table

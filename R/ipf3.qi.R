@@ -1,25 +1,25 @@
 ipf3.qi <-
-function(rt=NULL,ct=NULL,dt=NULL,m=NULL,speed=TRUE,tol=1e-05,maxit=500,iter=TRUE){
-  if(any(round(colSums(rt))!=round(rowSums(ct))))
-    stop("row and column totals are not equal for one or more sub-tables, ensure colSums(rt)==rowSums(ct)")
+function(rtot=NULL,ctot=NULL,dtot=NULL,m=NULL,speed=TRUE,tol=1e-05,maxit=500,iter=TRUE){
+  if(any(round(colSums(rtot))!=round(rowSums(ctot))))
+    stop("row and column totals are not equal for one or more sub-tables, ensure colSums(rtot)==rowSums(ctot)")
   
-  n<-list(ik=rt,
-          jk=t(ct),
-          ijk=dt)
-  R<-dim(rt)[1]
+  n<-list(ik=rtot,
+          jk=t(ctot),
+          ijk=dtot)
+  R<-dim(rtot)[1]
   
   #set up diagonals
-  if(is.null(dt)){
+  if(is.null(dtot)){
     n$ijk<-array(1,c(R,R,R))
     n$ijk<-with(expand.grid(a = 1:R, b = 1:R), replace(n$ijk, cbind(a, a, b),  apply(cbind(c(n$ik),c(n$jk)),1,min) ))
   }
   
   #set up offset
   if(is.null(m)){
-    m<-array(1,c(dim(rt),dim(rt)[1]))
+    m<-array(1,c(dim(rtot),dim(rtot)[1]))
   }
   if(is.null(dimnames(m))){
-    dimnames(m)<-list(orig=dimnames(rt)[[1]],dest=dimnames(ct)[[1]],pob=dimnames(rt)[[2]])
+    dimnames(m)<-list(orig=dimnames(rtot)[[1]],dest=dimnames(ctot)[[1]],pob=dimnames(rtot)[[2]])
   }
   
   #alter ss (to speed up)

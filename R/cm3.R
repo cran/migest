@@ -1,8 +1,8 @@
 cm3 <-
-function(rt=NULL,ct=NULL,m,tol=1e-05,maxit=500,iter=FALSE)
+function(rtot=NULL,ctot=NULL,m,tol=1e-05,maxit=500,iter=FALSE)
 {
-  if(round(sum(rt))!=round(sum(ct)))
-    stop("row and column totals are not equal, ensure sum(rt)==sum(ct)")
+  if(round(sum(rtot))!=round(sum(ctot)))
+    stop("row and column totals are not equal, ensure sum(rtot)==sum(ctot)")
   i<-dim(m)[1];  j<-dim(m)[2]
   alpha <- rep(1,i)
   beta <- rep(1,j)
@@ -15,11 +15,11 @@ function(rt=NULL,ct=NULL,m,tol=1e-05,maxit=500,iter=FALSE)
   while(max.diff>tol & it<maxit){
     beta.old <- beta
     for(j in 1:j) {
-      beta[j] <- ct[j]/colSums(alpha*apply(m,c(1,2),sum))[j]
+      beta[j] <- ctot[j]/colSums(alpha*apply(m,c(1,2),sum))[j]
     }
     alpha.old <- alpha
     for(i in 1:i) {
-      alpha[i] <- rt[i]/colSums(beta*apply(m,c(2,1),sum))[i]
+      alpha[i] <- rtot[i]/colSums(beta*apply(m,c(2,1),sum))[i]
     }
     it<-it+1
     max.diff<-max(abs(alpha-alpha.old), abs(beta-beta.old))
