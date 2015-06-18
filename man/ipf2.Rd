@@ -61,11 +61,11 @@ Guy J. Abel
 dn <- LETTERS[1:2]
 y <- ipf2(rtot = c(18, 20), ctot = c(16, 22), m = matrix(c(5, 1, 2, 7), ncol = 2, 
         dimnames = list(orig = dn, dest = dn)))
-round(addmargins(y$mu))
+round(addmargins(y$mu),2)
 
 ## with all elements of offset equal
 y <- ipf2(rtot = c(18, 20), ctot = c(16, 22))
-round(addmargins(y$mu))
+round(addmargins(y$mu),2)
 
 ## with bigger matrix
 dn <- LETTERS[1:3]

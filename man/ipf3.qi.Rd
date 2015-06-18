@@ -42,7 +42,7 @@ Print the parameter estimates at each verboseation. By default \code{FALSE}.
 }
 }
 \details{
-Iterative Proportional Fitting routine set up using the partial likelihood derivatives illustrated in Abel (2012). The arguments \code{rtot} and \code{ctot} take the row-table and column-table specific known margins. By default the diagonal values are taken as their maximum possible values given the relevant margins totals in each table. Diagonal values can be added by the user, but care must be taken to ensure resulting diagonals are feasible given the set of margins. 
+Iterative Proportional Fitting routine set up using the partial likelihood derivatives illustrated in Abel (2013). The arguments \code{rtot} and \code{ctot} take the row-table and column-table specific known margins. By default the diagonal values are taken as their maximum possible values given the relevant margins totals in each table. Diagonal values can be added by the user, but care must be taken to ensure resulting diagonals are feasible given the set of margins. 
 
 The user must ensure that the row and column totals in each table sum to the same value. Care must also be taken to allow the dimension of the auxiliary matrix (\code{m}) equal those provided in the row and column totals.
 }
