@@ -1,11 +1,11 @@
-58c1d612f6b83b6c25a94922457c1fef *DESCRIPTION
+391a4f72e987e57ab2e3e764dde141dc *DESCRIPTION
 df390c53434517b304ac5db487184641 *NAMESPACE
 c515a08a4118c3ad02a90f03c2b4a818 *R/fn_migest.R
 34a06e277cdf736a6096c8d9df31b43d *README.md
 abe481cda81ecf4fcbfd119d3ad1e89a *data/rc9.fund.rda
 c01062b99107d0969b19fee3a1610b86 *demo/00Index
-d081c7413fa5b7260a77d3470e9558ea *demo/cfplot_nat.R
-dcc21dbca1e37be53353e5ce809998a3 *demo/cfplot_reg.R
+f6a2d2e221938464d011dab167738a0c *demo/cfplot_nat.R
+1c31d766ed9fa09c7a113b60f2b5b14b *demo/cfplot_reg.R
 3cdd8bb8464b3b85aaa2dbb3140ef3a3 *inst/science/country_custom.txt
 1b4d72bacdb3904e0031dd216ead059f *inst/science/region_custom.txt
 decf57efa30eba2a13148f1e8beef785 *man/cm2.Rd
@@ -15,6 +15,6 @@ a33f8c708e36d3c9b682cd4bd7b9f55f *man/fm.Rd
 6c7b402300b466fd063ab42951717ef4 *man/ipf2.Rd
 b94b609c4f6293510f7cd5419fc41c4a *man/ipf3.Rd
 d5ae4a63ec6b8b984652c0c7ff8355d9 *man/ipf3.qi.Rd
-cb24824bc9081125be7097dae5c7eb6c *man/migest-package.Rd
-08150f7a6f1d68d46cf92e3d0650c159 *man/rc9.Rd
+eb0a2bebeaa6a850da7f7d41c4cbd18a *man/migest-package.Rd
+5dc92b5e06000e2b72894bb715d17674 *man/rc9.Rd
 df29a11d04b7b2d7e1996026fffe04af *man/rc9.fund.Rd
