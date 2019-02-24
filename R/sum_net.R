@@ -12,8 +12,8 @@
 #'
 #' @examples
 #' m <- matrix(data = 1:16, nrow = 4, ncol = 4)
-#' net_sum(m)
-net_sum <- function(m, region = 1:dim(m)[1]){
+#' sum_net(m)
+sum_net <- function(m, region = 1:dim(m)[1]){
   row_tot <- apply(X = m, MARGIN = 1, FUN = sum, na.rm = TRUE)
   col_tot <- apply(X = m, MARGIN = 2, FUN = sum, na.rm = TRUE)
   net <- col_tot - row_tot
