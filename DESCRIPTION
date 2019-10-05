@@ -1,7 +1,7 @@
 Package: migest
 Type: Package
 Title: Methods for the Indirect Estimation of Bilateral Migration
-Version: 1.8.0
+Version: 1.8.1
 Authors@R: c(person(c("Guy", "J."), "Abel", role = c("aut", "cre"),
                     email = "g.j.abel@gmail.com",
                     comment = c(ORCID = "0000-0002-4893-5687")))
@@ -12,9 +12,10 @@ BugReports: https://github.com/gjabel/migest/issues
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
+Imports: mipfp, dplyr, purrr, tidyr, stringr, magrittr, stats, utils
 NeedsCompilation: no
-Packaged: 2019-02-24 16:38:40 UTC; Guy
+Packaged: 2019-10-05 14:30:46 UTC; Guy
 Author: Guy J. Abel [aut, cre] (<https://orcid.org/0000-0002-4893-5687>)
 Repository: CRAN
-Date/Publication: 2019-02-24 18:10:13 UTC
+Date/Publication: 2019-10-05 14:50:02 UTC
