@@ -4,14 +4,16 @@
 \alias{match_pob_tot}
 \title{Adjust Migrant Stock Tables to Have Matching Place of Birth Totals}
 \usage{
-match_pob_tot(m1, m2, method = "rescale")
+match_pob_tot(m1, m2, method = "rescale", verbose = FALSE)
 }
 \arguments{
 \item{m1}{Matrix of migrant stock totals at time \emph{t}. Rows in the matrix correspond to place of birth and columns to place of residence at time \emph{t}+1.}
 
 \item{m2}{Matrix of migrant stock totals at time \emph{t}+1. Rows in the matrix correspond to place of birth and columns to place of residence at time \emph{t}+1.}
 
-\item{method}{Character string matching either \code{rescale}, \code{open}, \code{open-dr}. The \code{rescale} method ensure flow estimates closely match the net migration totals implied by the changes in population totals, births and deaths - as introduced in the Science paper. The \code{open-dr} method allows for moves in and out of the global system - as introduced in the Demographic Research paper. The \code{open} method is a slight improvement over \code{open-dr} - the calculation of the moves and in and out use more sensible weights.}
+\item{method}{Character string matching either \code{rescale}, \code{rescale-adjust-zero-fb}, \code{open} or \code{open-dr}. See details.}
+
+\item{verbose}{Logical value to indicate the print the parameter estimates at each iteration of the rescale, as used in \code{ipf2}. By default \code{FALSE}.}
 }
 \value{
 Returns a \code{list} object with:
@@ -23,8 +25,16 @@ Returns a \code{list} object with:
 \description{
 This function is predominantly intended to be used within the ffs routines in the migest package.
 }
+\details{
+The \code{rescale} and \code{rescale-adjust-zero-fb} method ensure flow estimates closely match the net migration totals implied by the changes in population totals, births and deaths - as introduced in the Science paper. The \code{rescale-adjust-zero-fb} can adjust for rare cases when row total margins that are smaller than native born totals in countries where there are no foreign born populations (e.g. South Sudan 1990-1995).
+The \code{open-dr} method allows for moves in and out of the global system - as introduced in the Demographic Research paper. The \code{open} method is a slight improvement over \code{open-dr} - the calculation of the moves and in and out using more sensible weights.
+}
 \references{
-Abel, G. J. (2018). Estimates of Global Bilateral Migration Flows by Gender between 1960 and 2015. \emph{International Migration Review} Forthcoming.
+Abel and Cohen (2019) Bilateral international migration flow estimates for 200 countries \emph{Scientific Data} 6 (1), 1-13
+
+Azose & Raftery (2019) Estimation of emigration, return migration, and transit migration between all pairs of countries \emph{Proceedings of the National Academy of Sciences} 116 (1) 116-122
+
+Abel, G. J. (2018). Estimates of Global Bilateral Migration Flows by Gender between 1960 and 2015. \emph{International Migration Review} 52 (3), 809–852.
 
 Abel, G. J. and Sander, N. (2014). Quantifying Global International Migration Flows. \emph{Science}, 343 (6178) 1520-1522
 }

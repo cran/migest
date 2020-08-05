@@ -4,8 +4,14 @@
 \alias{ipf3}
 \title{Iterative Proportional Fitting Routine for the Indirect Estimation of Origin-Destination-Migrant Type Migration Flow Tables with Known Origin and Destination Margins.}
 \usage{
-ipf3(row_tot = NULL, col_tot = NULL, m = NULL, tol = 1e-05,
-  maxit = 500, verbose = TRUE)
+ipf3(
+  row_tot = NULL,
+  col_tot = NULL,
+  m = NULL,
+  tol = 1e-05,
+  maxit = 500,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{row_tot}{Vector of origin totals to constrain the sum of the imputed cell rows.}
@@ -70,6 +76,10 @@ round(addmargins(y$mu), 1)
 round(sum_od(y$mu), 1)
 }
 \references{
+Abel and Cohen (2019) Bilateral international migration flow estimates for 200 countries \emph{Scientific Data} 6 (1), 1-13
+
+Azose & Raftery (2019) Estimation of emigration, return migration, and transit migration between all pairs of countries \emph{Proceedings of the National Academy of Sciences} 116 (1) 116-122
+
 Abel, G. J. (2013). Estimating Global Migration Flow Tables Using Place of Birth. \emph{Demographic Research} 28, (18) 505-546
 
 Agresti, A. (2002). \emph{Categorical Data Analysis} 2nd edition. Wiley.

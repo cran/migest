@@ -1,7 +1,7 @@
 #' Calculate Births for Each Element of Place of Birth - Place of Residence Stock Matrix 
 #'
 #' This function is predominantly intended to be used within the ffs routines in the migest package. 
-#' @param b_por Vector of numberic values for births in each place of residence
+#' @param b_por Vector of numeric values for births in each place of residence
 #' @param m2 Matrix of migrant stock totals at time \emph{t}+1. Rows in the matrix correspond to place of birth and columns to place of residence at time \emph{t}+1.
 #' @param non_negative Adjust birth matrix calculation to ensure all deductions from \code{m2} will result in positive population counts. On rare occasions when working with international stock data the number of births can exceed the increase in the number of native born population.
 #'
@@ -10,7 +10,9 @@
 #' @seealso \code{\link{ipf3_qi}}, \code{\link{ffs_diff}}
 #' @export
 birth_mat <- function(b_por = NULL, m2 = NULL, non_negative = TRUE){
-  bb <- diag(b_por)
+  # m2 = m2_b
+  bb <- m2
+  bb[,] <- diag(b_por)
   if(non_negative){
     # check that deduction of bb will not lead to negative populations
     xx <- diag(m2) - b_por < 0

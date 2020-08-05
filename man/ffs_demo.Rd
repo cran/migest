@@ -5,10 +5,20 @@
 \alias{ffs}
 \title{Estimation of Bilateral Migrant Flows from Bilateral Migrant Stocks Using Demographic Accounting Approaches}
 \usage{
-ffs_demo(m1 = NULL, m2 = NULL, b_por = NULL, d_por = NULL,
-  m = NULL, stayer_assumption = TRUE,
-  match_pob_tot_method = "rescale", birth_non_negative = TRUE,
-  death_method = "proportion", ...)
+ffs_demo(
+  m1 = NULL,
+  m2 = NULL,
+  b_por = NULL,
+  d_por = NULL,
+  m = NULL,
+  stayer_assumption = TRUE,
+  match_global = "before-demo-adjust",
+  match_pob_tot_method = "rescale",
+  birth_non_negative = TRUE,
+  death_method = "proportion",
+  verbose = FALSE,
+  ...
+)
 }
 \arguments{
 \item{m1}{Matrix of migrant stock totals at time \emph{t}. Rows in the matrix correspond to place of birth and columns to place of residence at time \emph{t}}
@@ -21,13 +31,17 @@ ffs_demo(m1 = NULL, m2 = NULL, b_por = NULL, d_por = NULL,
 
 \item{m}{Matrix of auxiliary data. By default set to 1 for all origin-destination combinations.}
 
-\item{stayer_assumption}{Logical value to indicate wheather to use \code{\link{ipf3}} or \code{\link{ipf3_qi}} to estimate flows. By default uses \code{ipf3_qi}, i.e. is set to \code{TRUE}. The \code{ipf} function is useful for replicating method of Azoze and Raferty.}
+\item{stayer_assumption}{Logical value to indicate whether to use \code{\link{ipf3}} or \code{\link{ipf3_qi}} to estimate flows. By default uses \code{ipf3_qi}, i.e. is set to \code{TRUE}. The \code{ipf} function is useful for replicating method of Azoze and Raferty.}
+
+\item{match_global}{Character string used to indicate whether to balance the change in stocks totals with the changes in births and deaths. Only applied when \code{match_pob_tot_method} is either \code{rescale} or \code{rescale-adjust-zero-fb}. By default uses \code{after-demo-adjust} rather than \code{before-demo-adjust} which I think minimises risk of negative values.}
 
 \item{match_pob_tot_method}{Character string passed to \code{method} argument in \code{\link{match_pob_tot}} to ensure place of birth margins in stock tables match.}
 
 \item{birth_non_negative}{Logical value passed to \code{non_negative} argument in \code{\link{birth_mat}}.}
 
 \item{death_method}{Character string passed to \code{method} argument in \code{\link{death_mat}}.}
+
+\item{verbose}{Logical value to indicate the print the parameter estimates at each iteration of the various IPF routines. By default \code{FALSE}.}
 
 \item{...}{Additional arguments passes to \code{\link{ipf3_qi}} or \code{\link{ipf3}}.}
 }
@@ -98,7 +112,11 @@ d[] <- c(30, 10, 40, 10)
 ffs_demo(m1 = s1, m2 = s2, b_por = b, d_por = d)
 }
 \references{
-Abel, G. J. (2018). Estimates of Global Bilateral Migration Flows by Gender between 1960 and 2015. \emph{International Migration Review} Forthcoming.
+Abel and Cohen (2019) Bilateral international migration flow estimates for 200 countries \emph{Scientific Data} 6 (1), 1-13
+
+Azose & Raftery (2019) Estimation of emigration, return migration, and transit migration between all pairs of countries \emph{Proceedings of the National Academy of Sciences} 116 (1) 116-122
+
+Abel, G. J. (2018). Estimates of Global Bilateral Migration Flows by Gender between 1960 and 2015. \emph{International Migration Review} 52 (3), 809–852.
 
 Abel, G. J. and Sander, N. (2014). Quantifying Global International Migration Flows. \emph{Science}, 343 (6178) 1520-1522
 
