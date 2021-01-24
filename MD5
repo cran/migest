@@ -1,4 +1,4 @@
-25d426be1009a081271e91666d6eeb8f *DESCRIPTION
+f00f84bd57cbe673a9fd2dec46091ccc *DESCRIPTION
 f74d8f279c9285e6debe4abb147cff34 *NAMESPACE
 c33a7f7c32414bdf806caf859cdd133f *R/birth_mat.R
 84eb67ffdc7e5174a78107d0a39ba1e8 *R/block_matrix.R
@@ -11,7 +11,7 @@ ad4c201e99e38c44186328e699435957 *R/ffs_demo.R
 4b507f5e7a746cbdc6831ad385e9ffd5 *R/ffs_diff.R
 95bbe3420c7dd2eee4f65050802c6578 *R/ffs_rates.R
 fb8b7b82f0612bd54bdd6cf2cb149ef1 *R/global.R
-578f4576f26dd30641c74560141a6f1e *R/ipf2.R
+4d9584d724177a6afc705b80709fda5f *R/ipf2.R
 9dd6b1b07c44d61670478645b65a9b38 *R/ipf2_block.R
 059fb1dbf213445318a96ac2c78c6078 *R/ipf2_stripe.R
 5b7e6c2875d92b3290d52c40ed90f9e0 *R/ipf3.R
@@ -64,13 +64,13 @@ a429918ac88aca548791aa51c6778303 *man/ipf2_stripe.Rd
 e82bfd862df4a44feec0ccf30aad97d0 *man/ipf3_qi.Rd
 169cb6518de5393a708b7b87d244a8b0 *man/ipf_seed.Rd
 b0cc7fbdef8b1482d99e9611e061bd12 *man/match_pob_tot.Rd
-f0329be6f427fff2f4abe91312659691 *man/migest-package.Rd
+93c59e84e023dcf3e8e7f91d3f875d85 *man/migest-package.Rd
 7fa04cc8d6f7d8da307b4939d8aa7454 *man/multi_comp.Rd
-17edd6231e5c53f5fe26ba4f5a1cf240 *man/multi_comp2.Rd
-36addcc401ba8965d3fc624923bf0c6a *man/net_from_lifetime.Rd
+a367ba2d224836e3f762254bc98bc000 *man/multi_comp2.Rd
+46a5a11e100862d8385d49d810354bb6 *man/net_from_lifetime.Rd
 0870b99a909db7e9b9e79c981847d049 *man/net_param.Rd
 c870014aace7412833580957141b273b *man/net_scale.Rd
-6e1e2b52cacf19dbaf2a12b33af842a8 *man/net_stream.Rd
+c5bd70d37c960a7ff6d43541c87b204e *man/net_stream.Rd
 e9d9cecf2884c3a8f7c86d8ef7b1354b *man/quadratic_eqn.Rd
 804e47f2ca5a0bf389969c2cbc4b210c *man/rc9.Rd
 21b88a79917a225e25233a046865ea64 *man/rc9.fund.Rd
@@ -80,5 +80,5 @@ e9d9cecf2884c3a8f7c86d8ef7b1354b *man/quadratic_eqn.Rd
 69ece67094796d43994026bf85e4c070 *man/stripe_matrix.Rd
 9db7305e27918a38c1cc61218247a893 *man/sum_net.Rd
 9fe75aa4df499a29decee211a64b012b *man/sum_od.Rd
-8dc70fd2ba282d9d7ce672ffccc7deea *man/sum_total.Rd
-2c0c4b9e7d60b51575a396172c83aab1 *man/sum_turnover.Rd
+8609e84fbb066f51b80f53b9d90b0396 *man/sum_total.Rd
+fe90b98d4c4b6ef9bb4f5e7d46cc2c97 *man/sum_turnover.Rd
