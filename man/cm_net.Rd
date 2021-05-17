@@ -2,7 +2,7 @@
 % Please edit documentation in R/cm_net.R
 \name{cm_net}
 \alias{cm_net}
-\title{Conditional Maximisation Routine for the Indirect Estimation of Origin-Destination-Type Migration Flow Tables with Known Net Migration Totals.}
+\title{Conditional maximization routine for the indirect estimation of origin-destination-type migration flow tables with known net migration totals.}
 \usage{
 cm_net(
   net_tot = NULL,
@@ -14,7 +14,7 @@ cm_net(
 )
 }
 \arguments{
-\item{net_tot}{Vector of net migration totals to constrain the sum of the imputed cell columns. Elements must sum to zero.}
+\item{net_tot}{Vector of net migration totals to constrain the sum of the imputed cell row and columns. Elements must sum to zero.}
 
 \item{m}{Array of auxiliary data. By default, set to 1 for all origin-destination-migrant typologies combinations.}
 
@@ -60,5 +60,5 @@ addmargins(y$n)
 sum_net(y$n)
 }
 \author{
-Guy J. Abel
+Guy J. Abel, Peter W. F. Smith
 }
