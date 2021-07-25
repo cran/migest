@@ -26,13 +26,13 @@
 #' 
 #' @author Guy J. Abel
 #' @seealso \code{\link{ipf3_qi}}, \code{\link{ffs_diff}}
-#' @export
 match_pob_tot <- function(m1, m2, method = "rescale", verbose = FALSE){
   if (!(method %in% c("open", "open-dr", "rescale-adjust-zero-fb", "rescale")) | length(method) != 1)
     stop("method must be open, open-dr, rescale-adjust-zero-fb or rescale")
   # m1 = m1_c; m2 = m2_c
   dd <- rowSums(m1) - rowSums(m2)
   # round(sum(dd))
+  pob1 <- nb1 <- pob2 <- nb2 <- value <- mid_target <- target <- fb1 <- fb2 <- NULL
   if(method == "rescale-adjust-zero-fb"){
     z <- 
       dd %>%
