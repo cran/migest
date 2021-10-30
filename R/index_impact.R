@@ -19,6 +19,7 @@
 #' @source Bell, M., Blake, M., Boyle, P., Duke-Williams, O., Rees, P. H., Stillwell, J., & Hugo, G. J. (2002). Cross-national comparison of internal migration: issues and measures. Journal of the Royal Statistical Society: Series A (Statistics in Society), 165(3), 435–464. https://doi.org/10.1111/1467-985X.00247 \cr
 #' @source Shryock, H. S., & Siegel, J. S. (1976). The Methods and Materials of Demography. (E. G. Stockwell (ed.); Condensed). Academic Press. \cr
 #' @source United Nations Department of Economic and Social Affairs Population Division. (1983). Methods of measuring internal migration. United Nations Publication. https://www.un.org/en/development/desa/population/publications/manual/migration/measuring-migration.asp
+#' @md
 #'
 #' @examples
 #' # single year
@@ -62,12 +63,12 @@ index_impact <- function(m, p,
 
   
   m %>%
-    sum_turnover() %>%
+    sum_region() %>%
     dplyr::summarise(
       effectivness = 100 * sum(abs(net)) / sum(turn),
       anmr = 100 * 0.5 * sum(abs(net)) / sum(p$pop),
       preference = sum(m / (sum(m) * (p$pop/sum(p$pop)) %*% (t(p$pop/sum(p$pop))))),
       velocity = sum(m / (p$pop %*% t(p$pop)) * sum(p$pop))
     ) %>%
-    {if(long) tidyr::pivot_longer(data = ., cols = "effectivness":"velocity", names_to = "measure") else .}
+    {if(long) tidyr::pivot_longer(data = ., cols = 1:ncol(.), names_to = "measure") else .}
 }

@@ -1,23 +1,26 @@
 Package: migest
 Type: Package
 Title: Methods for the Indirect Estimation of Bilateral Migration
-Version: 2.0.0
+Version: 2.0.1
 Authors@R: c(person(c("Guy", "J."), "Abel", role = c("aut", "cre"),
                     email = "g.j.abel@gmail.com",
                     comment = c(ORCID = "0000-0002-4893-5687")))
 Maintainer: Guy J. Abel <g.j.abel@gmail.com>
-Description: Indirect methods for estimating bilateral migration flows in the presence of partial or missing data, including the estimation of bilateral migration flows from changes in bilateral migrant stock tables (e.g. Abel (2013) <doi:10.4054/DemRes.2013.28.18>).
-URL: https://github.com/guyabel/migest/
+Description: Tools for estimating, measuring and working with migration data.
+URL: http://guyabel.github.io/migest/
 BugReports: https://github.com/guyabel/migest/issues
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Imports: dplyr, purrr, tidyr, stringr, magrittr, stats, tibble,
-        forcats, ggplot2, utils, matrixStats, migration.indices
+        forcats, utils, matrixStats, migration.indices, circlize,
+        graphics, grDevices
 Depends: R (>= 2.10)
+Suggests: spelling, tidyverse, countrycode
+Language: en-US
 NeedsCompilation: no
-Packaged: 2021-07-25 06:07:56 UTC; Guy
+Packaged: 2021-10-30 03:47:24 UTC; Guy
 Author: Guy J. Abel [aut, cre] (<https://orcid.org/0000-0002-4893-5687>)
 Repository: CRAN
-Date/Publication: 2021-07-25 06:20:02 UTC
+Date/Publication: 2021-10-30 04:30:06 UTC

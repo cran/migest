@@ -29,9 +29,3 @@ Matrix of place of death by place of residence
 \description{
 This function is predominantly intended to be used within the \code{ffs} routines in the migest package.
 }
-\seealso{
-\code{\link{ffs_diff}}
-}
-\author{
-Guy J. Abel
-}

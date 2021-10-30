@@ -23,10 +23,11 @@ Creates a \code{matrix} with differing size blocks
 }
 \examples{
 block_matrix(x = 1:16, b = c(2,3,4,2))
+
 block_matrix(x = 1:25, b = c(2,3,4,2,1))
 }
 \seealso{
-\code{\link{stripe_matrix}}, \code{\link{block_sum}}, \code{\link{ipf2_block}}
+\code{\link{stripe_matrix}}
 }
 \author{
 Guy J. Abel

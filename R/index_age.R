@@ -6,7 +6,7 @@
 #' @param mi Numeric vector of migration intensities corresponding to each value of `age`. Used if `d = NULL`.
 #' @param age_min Numeric value for minimum age for peak calculations. Taken as 5 by default.
 #' @param age_max Numeric value for maximum age for peak calculations. Taken as 65 by default.
-#' @param breadth Numeric value for number of age groups around peak to be used in breadth_peak measure. Defualt of `5`.
+#' @param breadth Numeric value for number of age groups around peak to be used in breadth_peak measure. Default of `5`.
 #' @param age_col Character string of the age column name (when \code{d} is provided)
 #' @param mi_col Character string of the migration intensities column name (when \code{d} is provided)
 #' @param long Logical to return a long data frame with index values all in one column
@@ -20,6 +20,7 @@
 #'   \item{murc}{Maximum upward rate of change of Bernard, Bell and Charles-Edwards (2014)}
 #'   \item{mdrc}{Maximum downward rate of change of Bernard, Bell and Charles-Edwards (2014)}
 #'   \item{asymmetry}{Asymmetry between the `murc` and `mudc`, from Bernard, Bell and Charles-Edwards (2014)}
+#' @md
 #'   
 #' @source Rogers, A. (1975). Introduction to Multiregional Mathematical Demography. Wiley.
 #' @source Bell, M., Blake, M., Boyle, P., Duke-Williams, O., Rees, P. H., Stillwell, J., & Hugo, G. J. (2002). Cross-national comparison of internal migration: issues and measures. Journal of the Royal Statistical Society: Series A (Statistics in Society), 165(3), 435–464. https://doi.org/10.1111/1467-985X.00247
@@ -69,7 +70,7 @@ index_age <- function(d = NULL, age, mi, age_min = 5, age_max = 65, breadth = 5,
       mdrc = a[d == min_d],
       asymmetry = murc/mdrc) %>%
     dplyr::select(-max_d, -min_d) %>%
-    {if(long) tidyr::pivot_longer(data = ., cols = "gmr":"asymmetry", names_to = "measure") else .}
+    {if(long) tidyr::pivot_longer(data = ., cols = 1:ncol(.), names_to = "measure") else .}
 }
 
 

@@ -12,7 +12,7 @@
 #' @source Bell, M., Blake, M., Boyle, P., Duke-Williams, O., Rees, P. H., Stillwell, J., & Hugo, G. J. (2002). Cross-national comparison of internal migration: issues and measures. Journal of the Royal Statistical Society: Series A (Statistics in Society), 165(3), 435–464. https://doi.org/10.1111/1467-985X.00247 
 #' @source Courgeau, D. (1973). Migrants et migrations. Population, 28(1), 95–129. https://doi.org/10.2307/1530972
 #' @source Bernard, A., Rowe, F., Bell, M., Ueffing, P., Charles-Edwards, E., & Zhu, Y. (2017). Comparing internal migration across the countries of Latin America: A multidimensional approach. Plos One, 12(3), e0173895. https://doi.org/10.1371/journal.pone.0173895
-#' 
+#' @md
 #' @export
 #'
 #' @examples
@@ -59,6 +59,6 @@ index_intensity <- function(mig_total = NULL,
   cmp <- courgeau_k <- NULL
   tibble::tibble(cmp = 100 * mig_total/pop_total,
                  courgeau_k = cmp/log(n^2)) %>%
-    {if(long) tidyr::pivot_longer(data = ., cols = "cmp":"courgeau_k", names_to = "measure") else .}
+    {if(long) tidyr::pivot_longer(data = ., cols = 1:ncol(.), names_to = "measure") else .}
 }
 

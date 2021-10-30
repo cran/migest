@@ -31,15 +31,15 @@ ffs_demo(
 
 \item{m}{Matrix of auxiliary data. By default set to 1 for all origin-destination combinations.}
 
-\item{stayer_assumption}{Logical value to indicate whether to use \code{\link{ipf3}} or \code{\link{ipf3_qi}} to estimate flows. By default uses \code{ipf3_qi}, i.e. is set to \code{TRUE}. The \code{ipf} function is useful for replicating method of Azoze and Raferty.}
+\item{stayer_assumption}{Logical value to indicate whether to use \code{\link{ipf3}} or \code{ipf3_qi} to estimate flows. By default uses \code{ipf3_qi}, i.e. is set to \code{TRUE}. The \code{ipf} function is useful for replicating method of Azose and Raftery.}
 
 \item{match_global}{Character string used to indicate whether to balance the change in stocks totals with the changes in births and deaths. Only applied when \code{match_pob_tot_method} is either \code{rescale} or \code{rescale-adjust-zero-fb}. By default uses \code{after-demo-adjust} rather than \code{before-demo-adjust} which I think minimises risk of negative values.}
 
-\item{match_pob_tot_method}{Character string passed to \code{method} argument in \code{\link{match_pob_tot}} to ensure place of birth margins in stock tables match.}
+\item{match_pob_tot_method}{Character string passed to \code{method} argument in \code{match_pob_tot} to ensure place of birth margins in stock tables match.}
 
-\item{birth_non_negative}{Logical value passed to \code{non_negative} argument in \code{\link{birth_mat}}.}
+\item{birth_non_negative}{Logical value passed to \code{non_negative} argument in \code{birth_mat}.}
 
-\item{death_method}{Character string passed to \code{method} argument in \code{\link{death_mat}}.}
+\item{death_method}{Character string passed to \code{method} argument in \code{death_mat}.}
 
 \item{verbose}{Logical value to indicate the print the parameter estimates at each iteration of the various IPF routines. By default \code{FALSE}.}
 
@@ -69,47 +69,61 @@ s1 <- matrix(data = c(1000, 100, 10, 0, 55, 555, 50, 5, 80, 40, 800, 40, 20, 25,
 s2 <- matrix(data = c(950, 100, 60, 0, 80, 505, 75, 5, 90, 30, 800, 40, 40, 45, 0, 180),
              nrow = 4, ncol = 4, byrow = TRUE)
 b <- d <- rep(0, 4)
-reg <- LETTERS[1:4]
-dimnames(s1) <- dimnames(s2) <- list(pob = reg, por = reg)
-names(b) <- names(d) <- reg
-s1; s2; b; d
+r <- LETTERS[1:4]
+dimnames(s1) <- dimnames(s2) <- list(pob = r, por = r)
+names(b) <- names(d) <- r
+s1
+
+s2
+
+b
+
+d
 
 # demographic research and science paper example
-ffs_demo(m1 = s1, m2 = s2, b_por = b, d_por = d)
+e0 <- ffs_demo(m1 = s1, m2 = s2, b_por = b, d_por = d)
+e0$od_flow
 
 # international migration review paper example
 s1[,] <- c(100, 20, 10, 20, 10, 55, 40, 25, 10, 25, 140, 20, 0, 10, 65, 200)
 s2[,] <- c(70, 25, 10, 40, 30, 60, 55, 45, 10, 10, 140, 0, 10, 15, 50, 180)
-ffs_demo(m1 = s1, m2 = s2, b_por = b, d_por = d)
+e1 <- ffs_demo(m1 = s1, m2 = s2, b_por = b, d_por = d)
+e1$od_flow
 
 # international migration review supp. material example
-dm <- matrix(data = c(0, 5, 50, 500, 5, 0, 45, 495, 50, 45, 0, 450, 500, 495, 450, 0), 
+# distance matrix
+dd <- matrix(data = c(0, 5, 50, 500, 5, 0, 45, 495, 50, 45, 0, 450, 500, 495, 450, 0), 
              nrow = 4, ncol = 4, byrow = TRUE)
-dimnames(dm) <- list(orig = reg, dest = reg)
-ffs_demo(m1 = s1, m2 = s2, b_por = b, d_por = d, m = dm)
+dimnames(dd) <- list(orig = r, dest = r)
+dd
+e3 <- ffs_demo(m1 = s1, m2 = s2, b_por = b, d_por = d, m = dd)
+e3$od_flow
 
 ##
 ## with births and deaths over period
 ##
-# demographic research paper example
+# demographic research paper example (with births and deaths)
 s1[,] <- c(1000, 55, 80, 20, 100, 555, 40, 25, 10, 50, 800, 20, 0, 5, 40, 200)
 s2[,] <- c(1060, 45, 70, 30, 60, 540, 75, 30, 10, 40, 770, 20, 10, 0, 70, 230)
 b[] <- c(80, 20, 40, 60)
 d[] <- c(70, 30, 50, 10)
-ffs_demo(m1 = s1, m2 = s2, b_por = b, d_por = d, match_pob_tot_method = "open-dr")
+e4 <- ffs_demo(m1 = s1, m2 = s2, b_por = b, d_por = d, match_pob_tot_method = "open-dr")
 # makes more sense to use this method
-ffs_demo(m1 = s1, m2 = s2, b_por = b, d_por = d, match_pob_tot_method = "open")
+e5 <- ffs_demo(m1 = s1, m2 = s2, b_por = b, d_por = d, match_pob_tot_method = "open")
+e5$od_flow
 
 # science paper  supp. material example
 b[] <- c(80, 20, 60, 60)
-ffs_demo(m1 = s1, m2 = s2, b_por = b, d_por = d)
+e6 <- ffs_demo(m1 = s1, m2 = s2, b_por = b, d_por = d)
+e6$od_flow
 
-# international migration review supp. material example
+# international migration review supp. material example (with births and deaths)
 s1[,] <- c(100, 20, 10, 20, 10, 55, 40, 25, 10, 25, 140, 20, 0, 10, 65, 200)
 s2[,] <- c(75, 20, 30, 30, 25, 45, 40, 30, 5, 30, 150, 20, 0, 15, 60, 230)
 b[] <- c(10, 50, 25, 60)
 d[] <- c(30, 10, 40, 10)
-ffs_demo(m1 = s1, m2 = s2, b_por = b, d_por = d)
+e7 <- ffs_demo(m1 = s1, m2 = s2, b_por = b, d_por = d)
+e7$od_flow
 }
 \references{
 Abel and Cohen (2019) Bilateral international migration flow estimates for 200 countries \emph{Scientific Data} 6 (1), 1-13
@@ -123,7 +137,7 @@ Abel, G. J. and Sander, N. (2014). Quantifying Global International Migration Fl
 Abel, G. J. (2013). Estimating Global Migration Flow Tables Using Place of Birth. \emph{Demographic Research} 28, (18) 505-546
 }
 \seealso{
-\code{\link{ipf3_qi}}, \code{\link{ffs_diff}}, \code{\link{ffs_rates}}
+\code{\link{ffs_diff}}, \code{\link{ffs_rates}}
 }
 \author{
 Guy J. Abel

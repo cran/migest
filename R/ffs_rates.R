@@ -4,17 +4,17 @@
 #' @param m1 Matrix of migrant stock totals at time \emph{t}. Rows in the matrix correspond to place of birth and columns to place of residence at time \emph{t} 
 #' @param m2 Matrix of migrant stock totals at time \emph{t}+1. Rows in the matrix correspond to place of birth and columns to place of residence at time \emph{t}+1.
 #' @param M Numeric value for the global sum of migration flows, used for \code{dennett} approach.
-#' @param method Method to estimate flows. Can take values \code{dennett} or \code{rogers-von-rabenau}. See detials section for more information. Uses \code{dennett} as default. 
+#' @param method Method to estimate flows. Can take values \code{dennett} or \code{rogers-von-rabenau}. See details section for more information. Uses \code{dennett} as default. 
 #' 
 #' @return Estimates migrant transitions flows based on migration rates.
 #' 
-#' When \code{method = "dennett"} migration are derived from the matrix supplied to \code{m1}. Dennett uses bilateral migrant stocks at begining of period. Rates then multiplied by global migration flows supplied in \code{M}.
+#' When \code{method = "dennett"} migration are derived from the matrix supplied to \code{m1}. Dennett uses bilateral migrant stocks at beginning of period. Rates then multiplied by global migration flows supplied in \code{M}.
 #' 
-#' When \code{method = "rogers-von-rabenau"} a matrix of growth rates are derived from the changes in inital poplations stock \code{m1} to obtain \code{m2};
+#' When \code{method = "rogers-von-rabenau"} a matrix of growth rates are derived from the changes in initial populations stock \code{m1} to obtain \code{m2};
 #' \deqn{P^{t+1} = g P^{t}}
 #' and then multiplied by the corresponding populations at risk in \code{m1}. Can result in negative flows.
 #' 
-#' #' @references 
+#' @references 
 #' Dennett, A. (2015). Estimating an Annual Time Series of Global Migration Flows - An Alternative Methodology for Using Migrant Stock Data. \emph{Global Dynamics: Approaches from Complexity Science}, 125–142. https://doi.org/10.1002/9781118937464.ch7
 #' 
 #' Rogers, A., & Von Rabenau, B. (1971). Estimation of interregional migration streams from place-of-birth-by-residence data. \emph{Demography}, 8(2), 185–194.
@@ -28,8 +28,8 @@
 #'              nrow = 4, ncol = 4, byrow = TRUE)
 #' s2 <- matrix(data = c(75, 25, 5, 15, 20, 45, 30, 15, 30, 40, 150, 35, 10, 50, 5, 200),
 #'              nrow = 4, ncol = 4, byrow = TRUE)
-#' reg <- LETTERS[1:4]
-#' dimnames(s1) <- dimnames(s2) <- list(pob = reg, por = reg)
+#' r <- LETTERS[1:4]
+#' dimnames(s1) <- dimnames(s2) <- list(pob = r, por = r)
 #' s1; s2
 #' 
 #' # calculate total migration flows for dennett approach

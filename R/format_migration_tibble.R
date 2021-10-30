@@ -15,9 +15,9 @@ format_migration_tibble <- function(m, orig_col = "orig", dest_col = "dest", flo
                     dest := !!dest_col,
                     flow := !!flow_col)
     g <- dplyr::group_vars(m)
-    if(length(g) != 0) 
+    if(length(g) != 0)
       d <- dplyr::group_by_at(d, g)
-    if(length(g) == 0) 
+    if(length(g) == 0)
       g <- NULL
   }
   if(is.matrix(m)){

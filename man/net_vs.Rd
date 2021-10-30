@@ -24,7 +24,7 @@ net_vs(
 \item{deaths_col}{Character string name of column containing name of deaths over the period. Default \code{"deaths"}.}
 }
 \value{
-A tibble with additional columns for the population change (`pop_change`), the natural population incearse (`natural_inc`) and the net migration (`net`) over the period.
+A tibble with additional columns for the population change (`pop_change`), the natural population increase (`natural_inc`) and the net migration (`net`) over the period.
 }
 \description{
 Estimate net migration from vital statistics
@@ -42,4 +42,7 @@ d
 d \%>\%
   mutate(deaths = c(51449, 58845, 86880, 123220)) \%>\%
   net_vs(pop0_col = "pop_1960", pop1_col = "pop_1970")
+}
+\references{
+Bogue, D. J., Hinze, K., & White, M. (1982). Techniques of Estimating Net Migration. Community and Family Study Center. University of Chicago.
 }

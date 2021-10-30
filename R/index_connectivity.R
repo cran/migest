@@ -26,6 +26,7 @@
 #' @source Rogers, A., & Raymer, J. (1998). The Spatial Focus of US Interstate Migration Flows. International Journal of Population Geography, 4(1), 63–80. https://doi.org/10.1002/(SICI)1099-1220(199803)4%3A1<63%3A%3AAID-IJPG87>3.0.CO%3B2-U  \cr
 #' @source Rogers, A., & Sweeney, S. (1998). Measuring the Spatial Focus of Migration Patterns. Professional Geographer, 50(2), 232–242.  \cr
 #' @source Plane, D., & Mulligan, G. F. (1997). Measuring spatial focusing in a migration system. Demography, 34(2), 251–262. \cr
+#' @md
 #' 
 #' @export
 #'
@@ -52,7 +53,8 @@ index_connectivity <- function(m = NULL, #inequality_expected =  c("equal", "wei
   m0 <- stats::glm(formula = round(flow) ~ orig + dest, data = d0, family = "poisson")
   f0 <- stats::fitted(m0)
 
-  d <- tibble::tibble(
+  # d <- 
+  tibble::tibble(
     connectivity = migration.indices::migration.connectivity(m),
     inequality_equal = 0.5 * sum(abs(d0$flow/sum(d0$flow) - mean(d0$flow)/sum(d0$flow))),
     inequality_sim = 0.5 * sum(abs(d0$flow/sum(d0$flow) - f0/sum(f0))),
@@ -67,7 +69,7 @@ index_connectivity <- function(m = NULL, #inequality_expected =  c("equal", "wei
     cv = sqrt(sum((m -mean(m))^2)/(length(m) * (length(m)- 1))/mean(m)),
     acv = migration.indices::migration.acv(m)
   ) %>%
-    tidyr::pivot_longer(data = ., cols = 1:ncol(.))
+  {if(long) tidyr::pivot_longer(data = ., cols = 1:ncol(.), names_to = "measure") else .}
   # g <-
   #   migration.gini(m, corrected = gini_corrected) %>%
   #   unlist() %>%
@@ -80,8 +82,8 @@ index_connectivity <- function(m = NULL, #inequality_expected =  c("equal", "wei
   #   {if(gini_orig_all) . else dplyr::filter(., stringr::str_detect(string = name, pattern = "gini_out_", negate = TRUE))} %>%
   #   filter(str_detect(string = name, pattern = "exchange", negate = TRUE))
   
-  d %>%
+  # d %>%
     # bind_rows(g) %>%
-    {if(!long) tidyr::pivot_wider(data = ., names_to = "measure") else .}
+
 }
 
