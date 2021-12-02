@@ -1,7 +1,7 @@
 Package: migest
 Type: Package
 Title: Methods for the Indirect Estimation of Bilateral Migration
-Version: 2.0.1
+Version: 2.0.2
 Authors@R: c(person(c("Guy", "J."), "Abel", role = c("aut", "cre"),
                     email = "g.j.abel@gmail.com",
                     comment = c(ORCID = "0000-0002-4893-5687")))
@@ -20,7 +20,7 @@ Depends: R (>= 2.10)
 Suggests: spelling, tidyverse, countrycode
 Language: en-US
 NeedsCompilation: no
-Packaged: 2021-10-30 03:47:24 UTC; Guy
+Packaged: 2021-12-02 03:07:37 UTC; Guy
 Author: Guy J. Abel [aut, cre] (<https://orcid.org/0000-0002-4893-5687>)
 Repository: CRAN
-Date/Publication: 2021-10-30 04:30:06 UTC
+Date/Publication: 2021-12-02 05:30:02 UTC
