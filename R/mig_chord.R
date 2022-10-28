@@ -7,7 +7,8 @@
 #' @param lab_bend1 Named vector of bending labels for plot. Note line breaks do not work with \code{facing = "bending"} in circlize.
 #' @param lab_bend2 Named vector of second row of bending labels for plot. 
 #' @param label_size Font size of label text.
-#' @param label_nudge Numeric value to nudge labels towards (negative number) or away (positive number) the sector axis. 
+#' @param label_nudge Numeric value to nudge labels towards (negative number) or away (positive number) the sector axis.
+#' @param label_squeeze Numeric value to nudge \code{lab_bend1} and \code{lab_bend2} labels apart (negative number) or together (positive number).  
 #' @param axis_size Font size on axis labels.
 #' @param axis_breaks Numeric value for how often to add axis label breaks. Default not activated, uses default from \code{circlize::circos.axis()}
 #' @param ... Arguments for \code{circlize::chordDiagramFromDataFrame()}.
@@ -22,9 +23,9 @@
 #'
 #' @return Chord diagram based on first three columns of \code{x}. The function tweaks the defaults of \code{circlize::chordDiagramFromDataFrame()} for easier plotting of directional origin-destination data. Users can override these defaults and pass additional tweaks using any of the \code{circlize::chordDiagramFromDataFrame()} arguments.
 #' 
-#' The layout of the plots are designed to specifically work on plotting images into PDF devices with widths and heights of 7 inches (the default dimension when using the \code{pdf} function). See the end of the examples for converting PDFs to images. 
+#' The layout of the plots are designed to specifically work on plotting images into PDF devices with widths and heights of 7 inches (the default dimension when using the \code{pdf} function). See the end of the examples for converting PDF to PNG images in R. 
 #' 
-#' Fitting all the labels on the page is usually the most time consuming task. Use the different label options, including line breaks, \code{label_nudge}, track height in \code{preAllocateTracks} and font sizes in \code{label_size} and \code{axis_size} to find the best fit. If none of the label options produce desirable results, plot your own using \code{circlize::circos.text} having set \code{no_labels = TRUE} and \code{clear_circos_par = FALSE}.
+#' Fitting the sector labels on the page is usually the most time consuming task. Use the different label options, including line breaks, \code{label_nudge}, track height in \code{preAllocateTracks} and font sizes in \code{label_size} and \code{axis_size} to find the best fit. If none of the label options produce desirable results, plot your own using \code{circlize::circos.text} having set \code{no_labels = TRUE} and \code{clear_circos_par = FALSE}.
 #' @export
 #'
 #' @examples
@@ -32,21 +33,20 @@
 #' library(tidyverse)
 #' library(countrycode)
 #' # download Abel and Cohen (2019) estimates
-#' f <- read_csv("https://ndownloader.figshare.com/files/26239945")
+#' f <- read_csv("https://ndownloader.figshare.com/files/38016762", show_col_types = FALSE)
+#' f
 #' 
 #' # use dictionary to get region to region flows
 #' d <- f %>%
 #'   mutate(
-#'     orig = countrycode(
-#'       sourcevar = orig, custom_dict = dict_ims,
-#'       origin = "iso3c", destination = "region"),
-#'     dest = countrycode(
-#'       sourcevar = dest, custom_dict = dict_ims,
-#'       origin = "iso3c", destination = "region")
+#'     orig = countrycode(sourcevar = orig, custom_dict = dict_ims,
+#'                        origin = "iso3c", destination = "region"),
+#'     dest = countrycode(sourcevar = dest, custom_dict = dict_ims,
+#'                        origin = "iso3c", destination = "region")
 #'   ) %>%
-#' group_by(year0, orig, dest) %>%
-#' summarise_all(sum) %>%
-#' ungroup()
+#'   group_by(year0, orig, dest) %>%
+#'   summarise_all(sum) %>%
+#'   ungroup()
 #' d
 #'
 #' # 2015-2020 pseudo-Bayesian estimates for plotting
@@ -54,6 +54,7 @@
 #'     filter(year0 == 2015) %>%
 #'     mutate(flow = da_pb_closed/1e6) %>%
 #'     select(orig, dest, flow)
+#' pb
 #'     
 #' # pdf(file = "chord.pdf")
 #' mig_chord(x = pb)
@@ -119,6 +120,7 @@ mig_chord <- function(
   lab_bend2 = NULL,
   label_size = 1, 
   label_nudge = 0,
+  label_squeeze = 0,
   axis_size = 0.8,
   axis_breaks = NULL,
   ..., 
@@ -209,9 +211,12 @@ mig_chord <- function(
           # if(is.null(y$major.at))
           #   y$major.at <- seq(from = 0, to = sum(z$df[,3]), by = axis_breaks)
           # do.call(what = circlize::circos.axis, args = y)
+          mm <- sum(z$df[,3])
+            if(!is.null(z$xmax))
+              mm <- max(z$xmax)*2
           circlize::circos.axis(
             h = "bottom", labels.cex = axis_size, labels.niceFacing = FALSE,
-            major.at = seq(from = 0, to = sum(z$df[,3]), by = axis_breaks)
+            major.at = seq(from = 0, to = mm, by = axis_breaks)
           )
         }
       })
@@ -249,7 +254,7 @@ mig_chord <- function(
         }
         if(!is.null(lab_bend2)){
           circlize::circos.text(
-            x = mean(xx), y = 2 + label_nudge, labels = lab_bend2[s], 
+            x = mean(xx), y = 2 + label_nudge - label_squeeze, labels = lab_bend2[s], 
             cex = label_size, facing = "bending", niceFacing = FALSE)
         }
       }

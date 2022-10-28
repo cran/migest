@@ -59,7 +59,7 @@ sum_lump(m, threshold = 100, lump = c("in", "out"))
 # threshold on flows (default)
 sum_lump(m, threshold = 40)
 
-# return a matrix (only possible when input is a matrix and 
+# return a matrix (only possible when input is a matrix and
 # complete = TRUE) with small values replaced by zeros
 sum_lump(m, threshold = 50, complete = TRUE)
 
@@ -71,7 +71,8 @@ sum_lump(m, threshold = 80, complete = TRUE, return_matrix = FALSE)
 library(tidyverse)
 
 # download Abel and Cohen (2019) estimates
-f <- read_csv("https://ndownloader.figshare.com/files/26239945")
+f <- read_csv("https://ndownloader.figshare.com/files/38016762", show_col_types = FALSE)
+f
 
 # large 1990-1995 flow estimates
 f \%>\%

@@ -2,21 +2,10 @@
 % Please edit documentation in R/sum_region.R
 \name{sum_region}
 \alias{sum_region}
-\alias{sum_turnover}
 \alias{sum_country}
 \title{Summary of regional in-, out-, turnover and net-migration totals from an origin-destination migration flow matrix or data frame.}
 \usage{
 sum_region(
-  m,
-  drop_diagonal = TRUE,
-  orig_col = "orig",
-  dest_col = "dest",
-  flow_col = "flow",
-  international = FALSE,
-  include_net = TRUE
-)
-
-sum_turnover(
   m,
   drop_diagonal = TRUE,
   orig_col = "orig",
@@ -70,16 +59,17 @@ sum_region(m)
 library(tidyverse)
 
 # download Abel and Cohen (2019) estimates
-f <- read_csv("https://ndownloader.figshare.com/files/26239945")
+f <- read_csv("https://ndownloader.figshare.com/files/38016762", show_col_types = FALSE)
+f
 
-# turnover for single period
+# single period
 f \%>\% 
   filter(year0 == 1990) \%>\%
-  sum_region(flow_col = "da_pb_closed", type = "international")
+  sum_country(flow_col = "da_pb_closed")
 
-# turnover for all periods using group_by
+# all periods using group_by
 f \%>\% 
   group_by(year0) \%>\%
-  sum_region(flow_col = "da_pb_closed", type = "international")
+  sum_country(flow_col = "da_pb_closed")
 }   
 }

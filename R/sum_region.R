@@ -10,6 +10,7 @@
 #'
 #' @return A \code{tibble} with total in-, out- and turnover of flows for each region. 
 #' 
+#' 
 #' @export
 #' @examples 
 #' # matrix
@@ -24,17 +25,18 @@
 #' library(tidyverse)
 #' 
 #' # download Abel and Cohen (2019) estimates
-#' f <- read_csv("https://ndownloader.figshare.com/files/26239945")
+#' f <- read_csv("https://ndownloader.figshare.com/files/38016762", show_col_types = FALSE)
+#' f
 #' 
-#' # turnover for single period
+#' # single period
 #' f %>% 
 #'   filter(year0 == 1990) %>%
-#'   sum_region(flow_col = "da_pb_closed", type = "international")
+#'   sum_country(flow_col = "da_pb_closed")
 #' 
-#' # turnover for all periods using group_by
+#' # all periods using group_by
 #' f %>% 
 #'   group_by(year0) %>%
-#'   sum_region(flow_col = "da_pb_closed", type = "international")
+#'   sum_country(flow_col = "da_pb_closed")
 #' }   
 sum_region <- function(
   m, drop_diagonal = TRUE, 
@@ -45,8 +47,8 @@ sum_region <- function(
   # orig_col = "orig"; dest_col = "dest"; flow_col = "da_pb_closed"
   # flow_col = "flow"
   orig <- dest <- flow <- region <- tot_in_mig <- tot_out_mig <- NULL
-  # fmt <- migest:::format_migration_tibble(
-  fmt <- format_migration_tibble(
+  # fmt <- migest:::mig_tibble(
+  fmt <- mig_tibble(
     m = m, orig_col = orig_col, dest_col = dest_col, flow_col = flow_col
   )
   d <- fmt$d
@@ -90,10 +92,6 @@ sum_region <- function(
     stats::setNames(stringr::str_remove(names(.), pattern = "tot_"))
   return(d)
 }
-
-#' @rdname sum_region
-#' @export
-sum_turnover <- sum_region
 
 #' @rdname sum_region
 #' @export

@@ -18,7 +18,7 @@ ffs_demo(
   birth_non_negative = TRUE,
   death_method = "proportion",
   verbose = FALSE,
-  ...
+  return = "flow"
 )
 }
 \arguments{
@@ -32,7 +32,7 @@ ffs_demo(
 
 \item{m}{Matrix of auxiliary data. By default set to 1 for all origin-destination combinations.}
 
-\item{stayer_assumption}{Logical value to indicate whether to use \code{\link{ipf3}} or \code{ipf3_qi} to estimate flows. By default uses \code{ipf3_qi}, i.e. is set to \code{TRUE}. The \code{ipf} function is useful for replicating method of Azose and Raftery.}
+\item{stayer_assumption}{Logical value to indicate whether to use a quasi-independent or independent IPFP to estimate flows. By default uses quasi-independent, i.e. is set to \code{TRUE} and estimates the minimum migration. When set to \code{FALSE} estimates flows under the independent model as used as part of Azose and Raftery (2019).}
 
 \item{match_global}{Character string used to indicate whether to balance the change in stocks totals with the changes in births and deaths. Only applied when \code{match_pob_tot_method} is either \code{rescale} or \code{rescale-adjust-zero-fb}. By default uses \code{after-demo-adjust} rather than \code{before-demo-adjust} which I think minimises risk of negative values.}
 
@@ -44,20 +44,14 @@ ffs_demo(
 
 \item{death_method}{Character string passed to \code{method} argument in \code{death_mat}.}
 
-\item{verbose}{Logical value to indicate the print the parameter estimates at each iteration of the various IPF routines. By default \code{FALSE}.}
+\item{verbose}{Logical value to show progress of the estimation procedure. By default \code{FALSE}.}
 
-\item{...}{Additional arguments passes to \code{\link{ipf3_qi}} or \code{\link{ipf3}}.}
+\item{return}{Character string used to indicate whether to return the array of estimated flows when set to \code{flow} (default), array of demographic accounts when set to \code{account} or the demographic account, list of input settings and the origin-destination matrix when set to \code{classic}}
 }
 \value{
 Estimates migrant transitions flows between two sequential migrant stock tables using various methods. See the example section for possible variations on estimation methods.
 
-Returns a \code{list} object with:
-\item{mu }{Array of indirect estimates of origin-destination matrices by place of birth.}
-\item{it }{Iteration count.}
-\item{tol }{Tolerance level at final iteration.}
-\item{y }{Array of indirect estimates of origin-destination matrices by place of birth with additional rows and columns for births, deaths and moves to other regions.}
-\item{...}{Slots to record which estimation method was used (as set by arguments above)}
-\item{od_flow }{Matrix of estimated origin-destination flows}
+Detail of returned object varies depending on the setting used in the \code{return} argument.
 }
 \description{
 Estimates migrant transitions flows between two sequential migrant stock tables. Replaces old \code{ffs}.
@@ -66,41 +60,43 @@ Estimates migrant transitions flows between two sequential migrant stock tables.
 ##
 ## without births and deaths over period
 ##
-# data as in papers
+# data as in demographic research and science paper papers
+
 s1 <- matrix(data = c(1000, 100, 10, 0, 55, 555, 50, 5, 80, 40, 800, 40, 20, 25, 20, 200),
              nrow = 4, ncol = 4, byrow = TRUE)
 s2 <- matrix(data = c(950, 100, 60, 0, 80, 505, 75, 5, 90, 30, 800, 40, 40, 45, 0, 180),
              nrow = 4, ncol = 4, byrow = TRUE)
 b <- d <- rep(0, 4)
 r <- LETTERS[1:4]
-dimnames(s1) <- dimnames(s2) <- list(pob = r, por = r)
+dimnames(s1) <- dimnames(s2) <- list(birth =  r, dest = r)
 names(b) <- names(d) <- r
-s1
-
-s2
-
+addmargins(s1)
+addmargins(s2)
 b
-
 d
 
 # demographic research and science paper example
 e0 <- ffs_demo(m1 = s1, m2 = s2, b_por = b, d_por = d)
-e0$od_flow
+e0
+sum_od(e0)
 
 # international migration review paper example
 s1[,] <- c(100, 20, 10, 20, 10, 55, 40, 25, 10, 25, 140, 20, 0, 10, 65, 200)
 s2[,] <- c(70, 25, 10, 40, 30, 60, 55, 45, 10, 10, 140, 0, 10, 15, 50, 180)
+addmargins(s1)
+addmargins(s2)
+
 e1 <- ffs_demo(m1 = s1, m2 = s2, b_por = b, d_por = d)
-e1$od_flow
+sum_od(e1)
 
 # international migration review supp. material example
 # distance matrix
-dd <- matrix(data = c(0, 5, 50, 500, 5, 0, 45, 495, 50, 45, 0, 450, 500, 495, 450, 0), 
+dd <- matrix(data = c(0, 5, 50, 500, 5, 0, 45, 495, 50, 45, 0, 450, 500, 495, 450, 0),
              nrow = 4, ncol = 4, byrow = TRUE)
 dimnames(dd) <- list(orig = r, dest = r)
 dd
-e3 <- ffs_demo(m1 = s1, m2 = s2, b_por = b, d_por = d, m = dd)
-e3$od_flow
+e2 <- ffs_demo(m1 = s1, m2 = s2, b_por = b, d_por = d, m = dd)
+sum_od(e2)
 
 ##
 ## with births and deaths over period
@@ -110,23 +106,32 @@ s1[,] <- c(1000, 55, 80, 20, 100, 555, 40, 25, 10, 50, 800, 20, 0, 5, 40, 200)
 s2[,] <- c(1060, 45, 70, 30, 60, 540, 75, 30, 10, 40, 770, 20, 10, 0, 70, 230)
 b[] <- c(80, 20, 40, 60)
 d[] <- c(70, 30, 50, 10)
-e4 <- ffs_demo(m1 = s1, m2 = s2, b_por = b, d_por = d, match_pob_tot_method = "open-dr")
+e3 <- ffs_demo(m1 = s1, m2 = s2, b_por = b, d_por = d, match_pob_tot_method = "open-dr")
+sum_od(e3)
 # makes more sense to use this method
-e5 <- ffs_demo(m1 = s1, m2 = s2, b_por = b, d_por = d, match_pob_tot_method = "open")
-e5$od_flow
+e4 <- ffs_demo(m1 = s1, m2 = s2, b_por = b, d_por = d, match_pob_tot_method = "open")
+sum_od(e4)
 
 # science paper  supp. material example
 b[] <- c(80, 20, 60, 60)
-e6 <- ffs_demo(m1 = s1, m2 = s2, b_por = b, d_por = d)
-e6$od_flow
+e5 <- ffs_demo(m1 = s1, m2 = s2, b_por = b, d_por = d)
+sum_od(e5)
 
 # international migration review supp. material example (with births and deaths)
 s1[,] <- c(100, 20, 10, 20, 10, 55, 40, 25, 10, 25, 140, 20, 0, 10, 65, 200)
 s2[,] <- c(75, 20, 30, 30, 25, 45, 40, 30, 5, 30, 150, 20, 0, 15, 60, 230)
 b[] <- c(10, 50, 25, 60)
 d[] <- c(30, 10, 40, 10)
+e6 <- ffs_demo(m1 = s1, m2 = s2, b_por = b, d_por = d)
+sum_od(e6)
+
+# scientific data 2019 paper
+s1[] <- c(100, 80, 30, 60, 10, 180, 10, 70, 10, 10, 140, 10, 0, 90, 40, 160)
+s2[] <- c(95, 75, 55, 35, 5, 225, 0, 25, 15, 5, 115, 25, 5, 55, 50, 215)
+b[] <- c(0, 0, 0, 0)
+d[] <- c(0, 0, 0, 0)
 e7 <- ffs_demo(m1 = s1, m2 = s2, b_por = b, d_por = d)
-e7$od_flow
+sum_od(e7)
 }
 \references{
 Abel and Cohen (2019) Bilateral international migration flow estimates for 200 countries \emph{Scientific Data} 6 (1), 1-13
