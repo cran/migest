@@ -8,7 +8,7 @@ Bell, M., Blake, M., Boyle, P., Duke-Williams, O., Rees, P. H., Stillwell, J., &
 
 Shryock, H. S., & Siegel, J. S. (1976). The Methods and Materials of Demography. (E. G. Stockwell (ed.); Condensed). Academic Press. \cr
 
-United Nations Department of Economic and Social Affairs Population Division. (1983). Methods of measuring internal migration. United Nations Publication. https://www.un.org/en/development/desa/population/publications/manual/migration/measuring-migration.asp
+United Nations Department of Economic and Social Affairs Population Division. (1970). Methods of measuring internal migration. United Nations Department of Economic and Social Affairs Population Division - 1970 - Methods of measuring internal migration \url{https://www.un.org/development/desa/pd/sites/www.un.org.development.desa.pd/files/files/documents/2020/Jan/manual_vi_methods_of_measuring_internal_migration.pdf}
 }
 \usage{
 index_impact(
@@ -51,22 +51,31 @@ Summary indices of migration impact
 }
 \examples{
 # single year
-index_impact(
-  m = subset(korea_reg, year == 2020),
-  p = subset(korea_pop, year == 2020),
-  pop_col = "population"
-)
+library(dplyr)
+m <- korea_gravity \%>\%
+  filter(year == 2020,
+         orig != dest) \%>\%
+  select(orig, dest, flow)
+m
+p <- korea_gravity \%>\%
+  filter(year == 2020) \%>\%
+  distinct(dest, dest_pop)
+p
+index_impact(m = m, p = p, pop_col = "dest_pop", reg_col = "dest")
 
 # multiple years
-library(dplyr)
 library(tidyr)
 library(purrr) 
-korea_reg \%>\%
-  nest(m = c(orig, dest, flow)) \%>\%
-  left_join(korea_pop) \%>\%
-  nest(p = c(region, population)) \%>\%
-  mutate(i = map2(.x = m, .y = p, 
-                  .f = ~index_impact(m = .x, p = .y, pop_col = "population", long = FALSE))) \%>\%
-  select(-m, -p) \%>\%
+
+korea_gravity \%>\%
+  select(year, orig, dest, flow, dest_pop) \%>\%
+  group_nest(year) \%>\%
+  mutate(m = map(.x = data, .f = ~select(.x, orig, dest, flow)),
+         p = map(.x = data, .f = ~distinct(.x, dest, dest_pop)),
+         i = map2(.x = m, .y = p,
+                  .f = ~index_impact(
+                    m = .x, p = .y, pop_col = "dest_pop", reg_col = "dest", long = FALSE
+                  ))) \%>\%
+  select(-data, -m, -p) \%>\%
   unnest(i)
 }
